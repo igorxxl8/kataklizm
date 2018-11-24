@@ -1,9 +1,9 @@
 package parser;
 
-
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -11,18 +11,32 @@ import java.util.List;
  */
 public final class Lexer {
 
-    private static final String OPERATORS_CHARS = "+-*/()=<>";
-    private static final TokenType[] OPERATOR_TOKENS = {
-            TokenType.PLUS,
-            TokenType.MINUS,
-            TokenType.STAR,
-            TokenType.SLASH,
-            TokenType.LPAREN,
-            TokenType.RPAREN,
-            TokenType.EQ,
-            TokenType.LT,
-            TokenType.GT
-    };
+    private static final String OPERATORS_CHARS = "+-*/()=<>&!|";
+
+    private static final Map<String, TokenType> OPERATORS;
+
+    static {
+        OPERATORS = new HashMap<>();
+        OPERATORS.put("+", TokenType.PLUS);
+        OPERATORS.put("-", TokenType.MINUS);
+        OPERATORS.put("*", TokenType.STAR);
+        OPERATORS.put("/", TokenType.SLASH);
+        OPERATORS.put("(", TokenType.LPAREN);
+        OPERATORS.put(")", TokenType.RPAREN);
+        OPERATORS.put("=", TokenType.EQ);
+        OPERATORS.put("<", TokenType.LT);
+        OPERATORS.put(">", TokenType.GT);
+        OPERATORS.put("!", TokenType.EXCL);
+        OPERATORS.put("&", TokenType.AMP);
+        OPERATORS.put("|", TokenType.BAR);
+        OPERATORS.put("==", TokenType.EQEQ);
+        OPERATORS.put("!=", TokenType.EXCLEQ);
+        OPERATORS.put("<=", TokenType.LTEQ);
+        OPERATORS.put(">=", TokenType.GTEQ);
+        OPERATORS.put("&&", TokenType.AMPAMP);
+        OPERATORS.put("||", TokenType.BARBAR);
+    }
+
     private String input;
     private List<Token> tokens;
     private int pos;
@@ -42,11 +56,11 @@ public final class Lexer {
             } else if (Character.isLetter(current)) {
                 tokenizeWord();
 
-            } else if (current ==  '"') {
+            } else if (current == '"') {
                 tokenizeText();
-            } else if(OPERATORS_CHARS.indexOf(current) != -1){
+            } else if (OPERATORS_CHARS.indexOf(current) != -1) {
                 tokenizeOperator();
-            } else{
+            } else {
                 // whitespaces
                 next();
             }
@@ -60,18 +74,27 @@ public final class Lexer {
         final StringBuilder buffer = new StringBuilder();
         char current = peek(0);
         while (true) {
-            if (current == '\\'){
+            if (current == '\\') {
                 current = next();
-                switch (current){
-                    case '"': current = next(); buffer.append('"'); continue;
-                    case 'n': current = next(); buffer.append('\n'); continue;
-                    case 't': current = next(); buffer.append('\t'); continue;
+                switch (current) {
+                    case '"':
+                        current = next();
+                        buffer.append('"');
+                        continue;
+                    case 'n':
+                        current = next();
+                        buffer.append('\n');
+                        continue;
+                    case 't':
+                        current = next();
+                        buffer.append('\t');
+                        continue;
                 }
                 buffer.append('\\');
                 continue;
             }
 
-            if (current == '"'){
+            if (current == '"') {
                 break;
             }
 
@@ -92,26 +115,59 @@ public final class Lexer {
         }
 
         final String word = buffer.toString();
-        switch (word){
-            case "out" : addToken(TokenType.PRINT); break;
-            case "if" : addToken(TokenType.IF); break;
-            case "else" : addToken(TokenType.ELSE); break;
-            default: addToken(TokenType.WORD, word); break;
+        switch (word) {
+            case "out":
+                addToken(TokenType.PRINT);
+                break;
+            case "if":
+                addToken(TokenType.IF);
+                break;
+            case "else":
+                addToken(TokenType.ELSE);
+                break;
+            default:
+                addToken(TokenType.WORD, word);
+                break;
         }
     }
 
     private void tokenizeOperator() {
-        final int position = OPERATORS_CHARS.indexOf(peek(0));
-        addToken(OPERATOR_TOKENS[position]);
-        next();
+        char current = peek(0);
+        if (current == '/') {
+            if (peek(1) == '/') {
+                next();
+                next();
+                tokenizeComment();
+                return;
+            }
+        }
+
+        final StringBuilder buffer = new StringBuilder();
+        while (true) {
+            final String text = buffer.toString();
+            if (!OPERATORS.containsKey(text + current) && !text.isEmpty()) {
+                addToken(OPERATORS.get(text));
+                return;
+            }
+            buffer.append(current);
+            current = next();
+        }
+
+    }
+
+    private void tokenizeComment() {
+        char current = peek(0);
+        while ("\r\n\0".indexOf(current) == -1) {
+            current = next();
+        }
     }
 
     private void tokenizeNumber() {
         final StringBuilder buffer = new StringBuilder();
         char current = peek(0);
-        while (true){
-            if (current == '.'){
-                if (buffer.indexOf(".") != -1){
+        while (true) {
+            if (current == '.') {
+                if (buffer.indexOf(".") != -1) {
                     throw new RuntimeException("Invalid float number!");
                 }
             } else if (!Character.isDigit(current)) {
@@ -125,12 +181,12 @@ public final class Lexer {
     }
 
 
-    private char next(){
+    private char next() {
         pos++;
         return peek(0);
     }
 
-    private char peek(int relativePosition){
+    private char peek(int relativePosition) {
         final int position = pos + relativePosition;
 
         if (position >= length)
@@ -143,7 +199,7 @@ public final class Lexer {
         addToken(type, "");
     }
 
-    private void addToken(TokenType type, String text){
+    private void addToken(TokenType type, String text) {
         tokens.add(new Token(type, text));
     }
 }

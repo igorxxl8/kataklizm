@@ -1,6 +1,5 @@
-
+// hello
 a = 10
-if (a > 2)
-    out("1=1")
-else
-    out("1!=2")
+
+if (40 < 50 && 50 > 60) out("true")
+else out("false")
