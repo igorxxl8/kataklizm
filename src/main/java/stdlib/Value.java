@@ -1,7 +1,7 @@
 package stdlib;
 
 public interface Value {
-    double asDouble();
+    double asNumber();
 
     String asString();
 }

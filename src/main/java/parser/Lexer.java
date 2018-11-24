@@ -11,7 +11,7 @@ import java.util.List;
  */
 public final class Lexer {
 
-    private static final String OPERATORS_CHARS = "+-*/()=";
+    private static final String OPERATORS_CHARS = "+-*/()=<>";
     private static final TokenType[] OPERATOR_TOKENS = {
             TokenType.PLUS,
             TokenType.MINUS,
@@ -19,7 +19,9 @@ public final class Lexer {
             TokenType.SLASH,
             TokenType.LPAREN,
             TokenType.RPAREN,
-            TokenType.EQ
+            TokenType.EQ,
+            TokenType.LT,
+            TokenType.GT
     };
     private String input;
     private List<Token> tokens;
@@ -89,11 +91,12 @@ public final class Lexer {
             current = next();
         }
 
-        final String toString = buffer.toString();
-        if (toString.endsWith("out")){
-            addToken(TokenType.PRINT);
-        } else {
-            addToken(TokenType.WORD, toString);
+        final String word = buffer.toString();
+        switch (word){
+            case "out" : addToken(TokenType.PRINT); break;
+            case "if" : addToken(TokenType.IF); break;
+            case "else" : addToken(TokenType.ELSE); break;
+            default: addToken(TokenType.WORD, word); break;
         }
     }
 

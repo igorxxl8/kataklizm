@@ -23,7 +23,7 @@ public final class BinaryExpression implements Expression {
             final String string1 = value1.asString();
             switch (operation){
                 case '*' : {
-                    final int iterations = (int) value2.asDouble();
+                    final int iterations = (int) value2.asNumber();
                     final StringBuilder buffer = new StringBuilder();
                     for (int i = 0; i < iterations; i++){
                         buffer.append(string1);
@@ -36,8 +36,8 @@ public final class BinaryExpression implements Expression {
             }
         }
 
-        final double number1 = value1.asDouble();
-        final double number2 = value2.asDouble();
+        final double number1 = value1.asNumber();
+        final double number2 = value2.asNumber();
         switch (operation){
             case '-' : return new NumberValue(number1 - number2);
             case '*' : return new NumberValue(number1 * number2);
