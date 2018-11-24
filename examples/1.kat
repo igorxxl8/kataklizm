@@ -1,0 +1,4 @@
+word = PI + 2.6
+word2 = 5 + 5
+out("word1 = " + word + "\n")
+out("word2 = " + word2)
