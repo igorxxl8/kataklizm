@@ -1,11 +1,9 @@
 package parser;
 
 import parser.ast.expressions.*;
-import parser.ast.statements.AssignmentStatement;
-import parser.ast.statements.IfStatement;
-import parser.ast.statements.PrintStatement;
-import parser.ast.statements.Statement;
+import parser.ast.statements.*;
 
+import javax.swing.plaf.nimbus.State;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +19,32 @@ public final class Parser {
         size = tokens.size();
     }
 
-    public List<Statement> parse() {
-        final List<Statement> result = new ArrayList<>();
+    public Statement parse() {
+        final var result = new BlockStatement();
 
         while (!match(TokenType.EOF)) {
             result.add(statement());
         }
 
         return result;
+    }
+
+    private Statement block(){
+        final BlockStatement blockStatement = new BlockStatement();
+        consume(TokenType.LBRACE);
+        while (!match(TokenType.RBRACE)) {
+            blockStatement.add(statement());
+        }
+
+        return blockStatement;
+    }
+
+    private Statement statementOrBlock(){
+        if (get(0).getType() == TokenType.LBRACE){
+            return block();
+        }
+
+        return statement();
     }
 
     private Statement statement() {
@@ -38,6 +54,14 @@ public final class Parser {
 
         if (match(TokenType.IF)){
             return ifElse();
+        }
+
+        if (match(TokenType.LOOP)){
+            return loopStatement();
+        }
+
+        if (match(TokenType.FOR)){
+            return forStatement();
         }
 
         return assignmentStatement();
@@ -57,16 +81,32 @@ public final class Parser {
 
     private Statement ifElse() {
         final Expression condition = expression();
-        final Statement ifStatement = statement();
+        final Statement ifStatement = statementOrBlock();
         final Statement elseStatement;
 
         if (match(TokenType.ELSE)) {
-            elseStatement = statement();
+            elseStatement = statementOrBlock();
         } else {
             elseStatement = null;
         }
 
         return new IfStatement(condition, ifStatement, elseStatement);
+    }
+
+    private Statement loopStatement() {
+        final var condition = expression();
+        final var statement = statementOrBlock();
+        return new LoopStatement(condition, statement);
+    }
+
+    private Statement forStatement() {
+        final var init = assignmentStatement();
+        consume(TokenType.SEMI_COLON);
+        final var term = expression();
+        consume(TokenType.SEMI_COLON);
+        final var inc = assignmentStatement();
+        final var stat = statementOrBlock();
+        return new ForStatement(init, term, inc, stat);
     }
 
     private Expression expression() {

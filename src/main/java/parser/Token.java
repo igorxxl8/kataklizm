@@ -6,11 +6,11 @@ package parser;
 public final class Token {
 
     private TokenType type;
-    String text;
+    private String text;
 
     public Token(){}
 
-    public Token(TokenType type, String text) {
+    Token(TokenType type, String text) {
         this.type = type;
         this.text = text;
     }
@@ -23,7 +23,7 @@ public final class Token {
         return "Token(" + type + ')';
     }
 
-    public TokenType getType() {
+    TokenType getType() {
         return type;
     }
 
@@ -31,7 +31,7 @@ public final class Token {
         this.type = type;
     }
 
-    public String getText() {
+    String getText() {
         return text;
     }
 

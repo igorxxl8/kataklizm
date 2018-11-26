@@ -10,6 +10,8 @@ public enum TokenType {
     PRINT,
     IF,
     ELSE,
+    LOOP,
+    FOR,
 
     PLUS,
     MINUS,
@@ -29,8 +31,13 @@ public enum TokenType {
     AMP,
     AMPAMP,
 
+    LBRACE,
+    RBRACE,
+
     LPAREN,
     RPAREN,
+
+    SEMI_COLON,
 
     EOF
 }

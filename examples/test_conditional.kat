@@ -1,5 +1,18 @@
 // hello
 a = 10
 
-if (40 < 50 && 50 > 60) out("true")
-else out("false")
+if (40 < 50 && 50 > 60){
+    out("true")
+    out("true2")
+ }
+else {
+    out("false1\n")
+    out("false2")
+
+}
+
+i = 0
+loop (i < 10) {
+    i = i + 1
+    out("i = " + i + "\n")
+}
