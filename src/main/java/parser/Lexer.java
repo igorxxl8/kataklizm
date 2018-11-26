@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public final class Lexer {
 
-    private static final String OPERATORS_CHARS = "+-*/(){}=<>&!|;,";
+    private static final String OPERATORS_CHARS = "+-*/(){}[]=<>&!|;,";
 
     private static final Map<String, TokenType> OPERATORS;
 
@@ -23,6 +23,8 @@ public final class Lexer {
         OPERATORS.put("/", TokenType.SLASH);
         OPERATORS.put("{", TokenType.LBRACE);
         OPERATORS.put("}", TokenType.RBRACE);
+        OPERATORS.put("[", TokenType.LBRACKET);
+        OPERATORS.put("]", TokenType.RBRACKET);
         OPERATORS.put("(", TokenType.LPAREN);
         OPERATORS.put(")", TokenType.RPAREN);
         OPERATORS.put("=", TokenType.EQ);
@@ -142,6 +144,14 @@ public final class Lexer {
 
             case "break":
                 addToken(TokenType.BREAK);
+                break;
+
+            case "function":
+                addToken(TokenType.FUNCTION);
+                break;
+
+            case "ret":
+                addToken(TokenType.RETURN);
                 break;
 
             default:

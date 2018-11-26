@@ -1,0 +1,11 @@
+function sum(a, b) {
+    ret a + b
+}
+
+arr = array(1, "text", sum(10,15))
+stdout(arr, "\n")
+arr[0] = arr[0] + 1000 + arr[2]
+stdout(arr)
+
+arr1 = [1, 2, 3, 4, arr]
+stdout(arr1)

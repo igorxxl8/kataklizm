@@ -1,8 +1,9 @@
 package parser.ast.expressions;
 
-import stdlib.Function;
 import stdlib.Functions;
+import stdlib.UserDeclaratedFunction;
 import stdlib.Value;
+import stdlib.Variables;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +34,22 @@ public class FunctionalExpression implements Expression{
         for (int i = 0; i < size; i++) {
             values[i] = args.get(i).eval();
         }
+        final var function = Functions.get(name);
+        if (function instanceof UserDeclaratedFunction) {
+            final var userFunction = (UserDeclaratedFunction) function;
+            if (size != userFunction.getArgsCount()) {
+                throw new RuntimeException("Args count mismatch!");
+            }
 
-        return Functions.get(name).execute(values);
+            Variables.push();
+            for (int i = 0; i < size; i++) {
+                Variables.set(userFunction.getArgsName(i), values[i]);
+            }
+            final Value result = userFunction.execute(values);
+            Variables.pop();
+            return result;
+        }
+        return function.execute(values);
     }
 
     @Override

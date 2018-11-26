@@ -2,6 +2,7 @@ package stdlib;
 
 public class NumberValue implements Value {
 
+    static final NumberValue ZERO = new NumberValue(0);
     private final double value;
 
     public NumberValue(boolean value) {

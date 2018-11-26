@@ -5,7 +5,7 @@ import java.util.Map;
 
 public final class Functions {
 
-    private static final NumberValue ZERO = new NumberValue(0);
+
     private static Map<String, Function> functions;
 
     static {
@@ -27,10 +27,13 @@ public final class Functions {
 
         functions.put("stdout", args -> {
             for (var arg : args){
-                System.out.println(arg.asString());
+                System.out.print(arg.asString());
             }
-            return ZERO;
+            return NumberValue.ZERO;
         });
+
+        functions.put("array", ArrayValue::new);
+
     }
 
     public static boolean isExists(String name){

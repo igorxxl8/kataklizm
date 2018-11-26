@@ -1,5 +1,6 @@
 package parser.ast.expressions;
 
+import stdlib.ArrayValue;
 import stdlib.NumberValue;
 import stdlib.StringValue;
 import stdlib.Value;
@@ -19,7 +20,7 @@ public final class BinaryExpression implements Expression {
     public Value eval() {
         final Value value1 = expr1.eval();
         final Value value2 = expr2.eval();
-        if (value1 instanceof StringValue){
+        if ((value1 instanceof StringValue) || (value1 instanceof ArrayValue)){
             final String string1 = value1.asString();
             switch (operation){
                 case '*' : {

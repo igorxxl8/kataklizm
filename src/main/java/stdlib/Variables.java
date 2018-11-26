@@ -2,16 +2,26 @@ package stdlib;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 public final class Variables {
 
-    private static final NumberValue ZERO = new NumberValue(0);
     private static Map<String, Value> variables;
+    private static final Stack<Map<String, Value>> stack;
 
     static {
+        stack = new Stack<>();
         variables = new HashMap<>();
         variables.put("PI", new NumberValue(Math.PI));
         variables.put("E",  new NumberValue(Math.E));
+    }
+
+    public static void push() {
+        stack.push(new HashMap<>(variables));
+    }
+
+    public static void pop() {
+        variables = stack.pop();
     }
 
     public static boolean isExists(String name){
@@ -20,7 +30,7 @@ public final class Variables {
 
     public static Value get(String name) {
         if (!isExists(name)){
-            return ZERO;
+            return NumberValue.ZERO;
         }
 
         return variables.get(name);

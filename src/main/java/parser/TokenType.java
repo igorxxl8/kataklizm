@@ -15,6 +15,9 @@ public enum TokenType {
     BREAK,
     CONTINUE,
 
+    FUNCTION,
+    RETURN,
+
     PLUS,
     MINUS,
     STAR,
@@ -35,6 +38,9 @@ public enum TokenType {
 
     LBRACE,
     RBRACE,
+
+    LBRACKET,
+    RBRACKET,
 
     LPAREN,
     RPAREN,
