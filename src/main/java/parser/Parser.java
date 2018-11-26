@@ -28,7 +28,7 @@ public final class Parser {
         return result;
     }
 
-    private Statement block(){
+    private Statement block() {
         final BlockStatement blockStatement = new BlockStatement();
         consume(TokenType.LBRACE);
         while (!match(TokenType.RBRACE)) {
@@ -38,8 +38,8 @@ public final class Parser {
         return blockStatement;
     }
 
-    private Statement statementOrBlock(){
-        if (get(0).getType() == TokenType.LBRACE){
+    private Statement statementOrBlock() {
+        if (get(0).getType() == TokenType.LBRACE) {
             return block();
         }
 
@@ -51,41 +51,40 @@ public final class Parser {
             return new PrintStatement(expression());
         }
 
-        if (match(TokenType.IF)){
+        if (match(TokenType.IF)) {
             return ifElse();
         }
 
-        if (match(TokenType.LOOP)){
+        if (match(TokenType.LOOP)) {
             return loopStatement();
         }
 
-        if (match(TokenType.BREAK)){
+        if (match(TokenType.BREAK)) {
             return new BreakStatement();
         }
 
-        if (match(TokenType.CONTINUE)){
+        if (match(TokenType.CONTINUE)) {
             return new ContinueStatement();
         }
 
-        if (match(TokenType.RETURN)){
+        if (match(TokenType.RETURN)) {
             return new ReturnStatement(expression());
         }
 
-        if (match(TokenType.FOR)){
+        if (match(TokenType.FOR)) {
             return forStatement();
         }
 
-        if (match(TokenType.FUNCTION)){
+        if (match(TokenType.FUNCTION)) {
             return functionDeclaration();
         }
 
-        if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.LPAREN){
+        if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.LPAREN) {
             return new FunctionalStatement(function());
         }
 
         return assignmentStatement();
     }
-
 
 
     private Statement assignmentStatement() {
@@ -96,12 +95,9 @@ public final class Parser {
         }
 
         if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.LBRACKET) {
-            final String variable = consume(TokenType.WORD).getText();
-            consume(TokenType.LBRACKET);
-            final Expression index = expression();
-            consume(TokenType.RBRACKET);
+            ArrayAccessExpression array = element();
             consume(TokenType.EQ);
-            return new ArrayAssignmentStatement(variable, index, expression());
+            return new ArrayAssignmentStatement(array, expression());
         }
 
         throw new RuntimeException("Unknown statement near!");
@@ -142,7 +138,7 @@ public final class Parser {
         final var name = consume(TokenType.WORD).getText();
         consume(TokenType.LPAREN);
         final List<String> argNames = new ArrayList<>();
-        while (!match(TokenType.RPAREN)){
+        while (!match(TokenType.RPAREN)) {
             argNames.add(consume(TokenType.WORD).getText());
             match(TokenType.COMMA);
         }
@@ -155,7 +151,7 @@ public final class Parser {
         final var name = consume(TokenType.WORD).getText();
         consume(TokenType.LPAREN);
         final var function = new FunctionalExpression(name);
-        while (!match(TokenType.RPAREN)){
+        while (!match(TokenType.RPAREN)) {
             function.addArgument(expression());
             match(TokenType.COMMA);
         }
@@ -290,15 +286,15 @@ public final class Parser {
             return new ValueExpression(Double.parseDouble(current.getText()));
         }
 
-        if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.LPAREN){
+        if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.LPAREN) {
             return function();
         }
 
-        if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.LBRACKET){
+        if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.LBRACKET) {
             return element();
         }
 
-        if (get(0).getType() == TokenType.LBRACKET){
+        if (get(0).getType() == TokenType.LBRACKET) {
             return array();
         }
 
@@ -323,19 +319,23 @@ public final class Parser {
     private Expression array() {
         consume(TokenType.LBRACKET);
         final List<Expression> elements = new ArrayList<>();
-        while (!match(TokenType.RBRACKET)){
+        while (!match(TokenType.RBRACKET)) {
             elements.add(expression());
             match(TokenType.COMMA);
         }
         return new ArrayExpression(elements);
     }
 
-    private Expression element() {
+    private ArrayAccessExpression element() {
         final String variable = consume(TokenType.WORD).getText();
-        consume(TokenType.LBRACKET);
-        final Expression index = expression();
-        consume(TokenType.RBRACKET);
-        return new ArrayAccessExpression(variable, index);
+        List<Expression> indexes = new ArrayList<>();
+        do {
+            consume(TokenType.LBRACKET);
+            indexes.add(expression());
+            consume(TokenType.RBRACKET);
+        } while (get(0).getType() == TokenType.LBRACKET);
+
+        return new ArrayAccessExpression(variable, indexes);
     }
 
     private Token consume(TokenType type) {
@@ -343,7 +343,6 @@ public final class Parser {
         if (type != current.getType()) {
             throw new RuntimeException("Token " + current + " doesn't match " + type);
         }
-
         pos++;
         return current;
     }

@@ -8,4 +8,10 @@ arr[0] = arr[0] + 1000 + arr[2]
 stdout(arr)
 
 arr1 = [1, 2, 3, 4, arr]
+arr1[4][1] = "lox"
 stdout(arr1)
+
+stdout("\n", "\n")
+
+array = init_array(2,2, 2, 2)
+out array

@@ -1,5 +1,7 @@
 package stdlib;
 
+import parser.ast.expressions.ArrayAccessExpression;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +35,29 @@ public final class Functions {
         });
 
         functions.put("array", ArrayValue::new);
+
+        functions.put("init_array", new Function() {
+            @Override
+            public Value execute(Value... args) {
+                return createArray(args, 0);
+            }
+
+            private ArrayValue createArray(Value[] args, int index) {
+                final int size = (int)args[index].asNumber();
+                final int last = args.length - 1;
+                ArrayValue array = new ArrayValue(size);
+                if (index == last) {
+                    for (int i = 0; i < size; i++) {
+                        array.set(i, NumberValue.ZERO);
+                    }
+                }else if (index < last) {
+                    for (int i = 0; i < size; i++) {
+                        array.set(i, createArray(args, index+1));
+                    }
+                }
+                return array;
+            }
+        });
 
     }
 
