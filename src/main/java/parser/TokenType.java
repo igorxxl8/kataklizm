@@ -12,6 +12,8 @@ public enum TokenType {
     ELSE,
     LOOP,
     FOR,
+    BREAK,
+    CONTINUE,
 
     PLUS,
     MINUS,
@@ -38,6 +40,7 @@ public enum TokenType {
     RPAREN,
 
     SEMI_COLON,
+    COMMA,
 
     EOF
 }

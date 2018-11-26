@@ -15,7 +15,13 @@ public class LoopStatement implements Statement {
     @Override
     public void execute() {
         while(condition.eval().asNumber() != 0) {
-            statement.execute();
+            try {
+                statement.execute();
+            } catch (BreakStatement bk){
+                break;
+            } catch (ContinueStatement continueStatement){
+                //continue;
+            }
         }
     }
 

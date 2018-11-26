@@ -1,0 +1,9 @@
+a = sin(PI)
+
+out(a)
+out("\n")
+a = sin(0)
+out(a)
+out("\n")
+
+stdout(1,2,3,"3", sin(0), sin(PI), PI)

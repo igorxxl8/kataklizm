@@ -3,8 +3,6 @@ package parser;
 import parser.ast.expressions.*;
 import parser.ast.statements.*;
 
-import javax.swing.plaf.nimbus.State;
-import java.util.ArrayList;
 import java.util.List;
 
 public final class Parser {
@@ -60,8 +58,20 @@ public final class Parser {
             return loopStatement();
         }
 
+        if (match(TokenType.BREAK)){
+            return new BreakStatement();
+        }
+
+        if (match(TokenType.CONTINUE)){
+            return new ContinueStatement();
+        }
+
         if (match(TokenType.FOR)){
             return forStatement();
+        }
+
+        if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.LPAREN){
+            return new FunctionalStatement(function());
         }
 
         return assignmentStatement();
@@ -107,6 +117,18 @@ public final class Parser {
         final var inc = assignmentStatement();
         final var stat = statementOrBlock();
         return new ForStatement(init, term, inc, stat);
+    }
+
+
+    private FunctionalExpression function() {
+        final var name = consume(TokenType.WORD).getText();
+        consume(TokenType.LPAREN);
+        final var function = new FunctionalExpression(name);
+        while (!match(TokenType.RPAREN)){
+            function.addArgument(expression());
+            match(TokenType.COMMA);
+        }
+        return function;
     }
 
     private Expression expression() {
@@ -235,6 +257,10 @@ public final class Parser {
         final Token current = get(0);
         if (match(TokenType.NUMBER)) {
             return new ValueExpression(Double.parseDouble(current.getText()));
+        }
+
+        if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.LPAREN){
+            return function();
         }
 
         if (match(TokenType.WORD)) {
