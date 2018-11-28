@@ -13,7 +13,7 @@ public final class VariableExpression implements Expression {
 
     @Override
     public Value eval() {
-        if (!Variables.isExists(name)){
+        if (Variables.isNotExists(name)){
             throw new RuntimeException("Constant does not exists!");
         }
 

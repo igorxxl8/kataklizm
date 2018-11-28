@@ -14,9 +14,9 @@ public class ArrayExpression implements Expression{
 
     @Override
     public Value eval() {
-        final int size = values.size();
-        final ArrayValue array = new ArrayValue(size);
-        for (int i = 0; i < size; i++) {
+        final var size = values.size();
+        final var array = new ArrayValue(size);
+        for (var i = 0; i < size; i++) {
             array.set(i, values.get(i).eval());
         }
 

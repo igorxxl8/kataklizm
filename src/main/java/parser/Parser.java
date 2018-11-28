@@ -29,7 +29,7 @@ public final class Parser {
     }
 
     private Statement block() {
-        final BlockStatement blockStatement = new BlockStatement();
+        final var blockStatement = new BlockStatement();
         consume(TokenType.LBRACE);
         while (!match(TokenType.RBRACE)) {
             blockStatement.add(statement());
@@ -89,13 +89,13 @@ public final class Parser {
 
     private Statement assignmentStatement() {
         if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.EQ) {
-            final String variable = consume(TokenType.WORD).getText();
+            final var variable = consume(TokenType.WORD).getText();
             consume(TokenType.EQ);
             return new AssignmentStatement(variable, expression());
         }
 
         if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.LBRACKET) {
-            ArrayAccessExpression array = element();
+            var array = element();
             consume(TokenType.EQ);
             return new ArrayAssignmentStatement(array, expression());
         }
@@ -104,8 +104,8 @@ public final class Parser {
     }
 
     private Statement ifElse() {
-        final Expression condition = expression();
-        final Statement ifStatement = statementOrBlock();
+        final var condition = expression();
+        final var ifStatement = statementOrBlock();
         final Statement elseStatement;
 
         if (match(TokenType.ELSE)) {
@@ -163,7 +163,7 @@ public final class Parser {
     }
 
     private Expression logicalOr() {
-        Expression result = logicalAnd();
+        var result = logicalAnd();
 
         while (true) {
             if (match(TokenType.BARBAR)) {
@@ -177,7 +177,7 @@ public final class Parser {
     }
 
     private Expression logicalAnd() {
-        Expression result = equality();
+        var result = equality();
         while (true) {
             if (match(TokenType.AMPAMP)) {
                 result = new ConditionalExpression(ConditionalExpression.Operator.AND, result, equality());
@@ -189,7 +189,7 @@ public final class Parser {
     }
 
     private Expression equality() {
-        Expression result = conditional();
+        var result = conditional();
 
         if (match(TokenType.EQEQ)) {
             return new ConditionalExpression(ConditionalExpression.Operator.EQUALS, result, conditional());
@@ -204,7 +204,7 @@ public final class Parser {
     }
 
     private Expression conditional() {
-        Expression result = additive();
+        var result = additive();
         while (true) {
             if (match(TokenType.LT)) {
                 result = new ConditionalExpression(ConditionalExpression.Operator.LT, result, additive());
@@ -233,7 +233,7 @@ public final class Parser {
     }
 
     private Expression additive() {
-        Expression result = multiplicative();
+        var result = multiplicative();
         while (true) {
             if (match(TokenType.PLUS)) {
                 result = new BinaryExpression('+', result, multiplicative());
@@ -251,7 +251,7 @@ public final class Parser {
     }
 
     private Expression multiplicative() {
-        Expression result = unary();
+        var result = unary();
         while (true) {
             if (match(TokenType.STAR)) {
                 result = new BinaryExpression('*', result, unary());
@@ -281,7 +281,7 @@ public final class Parser {
     }
 
     private Expression primary() {
-        final Token current = get(0);
+        final var current = get(0);
         if (match(TokenType.NUMBER)) {
             return new ValueExpression(Double.parseDouble(current.getText()));
         }
@@ -307,7 +307,7 @@ public final class Parser {
         }
 
         if (match(TokenType.LPAREN)) {
-            Expression result = expression();
+            var result = expression();
             match(TokenType.RPAREN);
             return result;
         }
@@ -327,7 +327,7 @@ public final class Parser {
     }
 
     private ArrayAccessExpression element() {
-        final String variable = consume(TokenType.WORD).getText();
+        final var variable = consume(TokenType.WORD).getText();
         List<Expression> indexes = new ArrayList<>();
         do {
             consume(TokenType.LBRACKET);
@@ -339,7 +339,7 @@ public final class Parser {
     }
 
     private Token consume(TokenType type) {
-        final Token current = get(0);
+        final var current = get(0);
         if (type != current.getType()) {
             throw new RuntimeException("Token " + current + " doesn't match " + type);
         }
@@ -348,7 +348,7 @@ public final class Parser {
     }
 
     private boolean match(TokenType type) {
-        final Token current = get(0);
+        final var current = get(0);
         if (type != current.getType())
             return false;
 
@@ -357,7 +357,7 @@ public final class Parser {
     }
 
     private Token get(int relativePosition) {
-        final int position = pos + relativePosition;
+        final var position = pos + relativePosition;
 
         if (position >= size)
             return EOF;

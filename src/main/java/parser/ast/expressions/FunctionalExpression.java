@@ -29,9 +29,9 @@ public class FunctionalExpression implements Expression{
 
     @Override
     public Value eval() {
-        final int size = args.size();
+        final var size = args.size();
         final var values = new Value[size];
-        for (int i = 0; i < size; i++) {
+        for (var i = 0; i < size; i++) {
             values[i] = args.get(i).eval();
         }
         final var function = Functions.get(name);
@@ -42,10 +42,10 @@ public class FunctionalExpression implements Expression{
             }
 
             Variables.push();
-            for (int i = 0; i < size; i++) {
+            for (var i = 0; i < size; i++) {
                 Variables.set(userFunction.getArgsName(i), values[i]);
             }
-            final Value result = userFunction.execute(values);
+            final var result = userFunction.execute(values);
             Variables.pop();
             return result;
         }

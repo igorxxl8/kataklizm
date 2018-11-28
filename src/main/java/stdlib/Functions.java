@@ -43,15 +43,15 @@ public final class Functions {
             }
 
             private ArrayValue createArray(Value[] args, int index) {
-                final int size = (int)args[index].asNumber();
-                final int last = args.length - 1;
-                ArrayValue array = new ArrayValue(size);
+                final var size = (int)args[index].asNumber();
+                final var last = args.length - 1;
+                var array = new ArrayValue(size);
                 if (index == last) {
-                    for (int i = 0; i < size; i++) {
+                    for (var i = 0; i < size; i++) {
                         array.set(i, NumberValue.ZERO);
                     }
                 }else if (index < last) {
-                    for (int i = 0; i < size; i++) {
+                    for (var i = 0; i < size; i++) {
                         array.set(i, createArray(args, index+1));
                     }
                 }

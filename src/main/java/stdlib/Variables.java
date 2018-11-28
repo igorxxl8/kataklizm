@@ -24,12 +24,12 @@ public final class Variables {
         variables = stack.pop();
     }
 
-    public static boolean isExists(String name){
-        return variables.containsKey(name);
+    public static boolean isNotExists(String name){
+        return !variables.containsKey(name);
     }
 
     public static Value get(String name) {
-        if (!isExists(name)){
+        if (isNotExists(name)){
             return NumberValue.ZERO;
         }
 

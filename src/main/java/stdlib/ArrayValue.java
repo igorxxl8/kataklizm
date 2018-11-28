@@ -10,7 +10,7 @@ public class ArrayValue implements Value {
         this.elements = new Value[size];
     }
 
-    public ArrayValue(Value[] elements) {
+    ArrayValue(Value[] elements) {
         final var size = elements.length;
         this.elements = new Value[size];
         System.arraycopy(elements, 0, this.elements, 0, size);

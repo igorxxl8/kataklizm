@@ -18,15 +18,15 @@ public final class BinaryExpression implements Expression {
 
     @Override
     public Value eval() {
-        final Value value1 = expr1.eval();
-        final Value value2 = expr2.eval();
+        final var value1 = expr1.eval();
+        final var value2 = expr2.eval();
         if ((value1 instanceof StringValue) || (value1 instanceof ArrayValue)){
-            final String string1 = value1.asString();
+            final var string1 = value1.asString();
             switch (operation){
                 case '*' : {
-                    final int iterations = (int) value2.asNumber();
-                    final StringBuilder buffer = new StringBuilder();
-                    for (int i = 0; i < iterations; i++){
+                    final var iterations = (int) value2.asNumber();
+                    final var buffer = new StringBuilder();
+                    for (var i = 0; i < iterations; i++){
                         buffer.append(string1);
                     }
                     return new StringValue(buffer.toString());
@@ -37,8 +37,8 @@ public final class BinaryExpression implements Expression {
             }
         }
 
-        final double number1 = value1.asNumber();
-        final double number2 = value2.asNumber();
+        final var number1 = value1.asNumber();
+        final var number2 = value2.asNumber();
         switch (operation){
             case '-' : return new NumberValue(number1 - number2);
             case '*' : return new NumberValue(number1 * number2);

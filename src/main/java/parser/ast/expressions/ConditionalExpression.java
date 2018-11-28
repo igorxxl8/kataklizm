@@ -46,8 +46,8 @@ public final class ConditionalExpression implements Expression {
 
     @Override
     public Value eval() {
-        final Value value1 = expr1.eval();
-        final Value value2 = expr2.eval();
+        final var value1 = expr1.eval();
+        final var value2 = expr2.eval();
 
         double number1, number2;
         if (value1 instanceof StringValue) {

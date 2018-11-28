@@ -1,0 +1,18 @@
+stdout("hello world", "\n")
+a = 100
+b = 20
+if (a > b){
+    out stdout("a", ">", "b\n")
+}
+else {
+    a = a + b
+    stdout("a", " ", "\n")
+}
+
+i = 0
+loop(i < 10){
+    stdout(i, "\n")
+    i = i + 1
+}
+// ведомость, задание
+// больше кода

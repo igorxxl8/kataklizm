@@ -18,9 +18,9 @@ public class ArrayAccessExpression implements Expression {
 
 
     public ArrayValue getArray() {
-        ArrayValue array = consumeArray(Variables.get(variable));
-        final int last = indexes.size() - 1;
-        for (int i = 0; i < last; i++) {
+        var array = consumeArray(Variables.get(variable));
+        final var last = indexes.size() - 1;
+        for (var i = 0; i < last; i++) {
             array = consumeArray(array.get(index(i)));
         }
         return array;

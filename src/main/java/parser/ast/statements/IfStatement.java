@@ -16,7 +16,7 @@ public class IfStatement implements Statement {
 
     @Override
     public void execute() {
-        final double result = expression.eval().asNumber();
+        final var result = expression.eval().asNumber();
         if (result != 0) {
             ifStatement.execute();
         } else if (elseStatement != null) {
@@ -26,7 +26,7 @@ public class IfStatement implements Statement {
 
     @Override
     public String toString() {
-        final StringBuilder result = new StringBuilder();
+        final var result = new StringBuilder();
         result.append("if ").append(expression).append(' ').append(ifStatement);
         if (elseStatement != null) {
             result.append("\nelse ").append(elseStatement);
