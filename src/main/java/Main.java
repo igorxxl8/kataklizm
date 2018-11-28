@@ -11,13 +11,12 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
         final var filename = args[0];
-        final var mode = args[1];
         final var input = new String(Files.readAllBytes(Paths.get(filename)), "UTF-8");
 
         final var tokens = new Lexer(input).tokenize();
         final var program = new Parser(tokens).parse();
 
-        if (mode.equals("Debug")) {
+        if (args.length > 1) {
             System.out.println("\nTokens:");
             for (var token : tokens) {
                 System.out.println(String.format("\t%s", token));

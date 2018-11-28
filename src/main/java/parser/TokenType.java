@@ -14,6 +14,9 @@ public enum TokenType {
     FOR,
     BREAK,
     CONTINUE,
+    MATCH,
+    CASE,
+    ARROW,
 
     FUNCTION,
     RETURN,

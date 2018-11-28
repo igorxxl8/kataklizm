@@ -15,6 +15,10 @@ public class BlockStatement implements Statement {
         statements.add(statement);
     }
 
+    public List<Statement> getStatements() {
+        return statements;
+    }
+
     @Override
     public void execute() {
         for (var statement : statements){

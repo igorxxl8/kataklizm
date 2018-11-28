@@ -38,6 +38,7 @@ public final class Lexer {
         OPERATORS.put("==", TokenType.EQEQ);
         OPERATORS.put("!=", TokenType.EXCLEQ);
         OPERATORS.put("<=", TokenType.LTEQ);
+        OPERATORS.put("->", TokenType.ARROW);
         OPERATORS.put(">=", TokenType.GTEQ);
         OPERATORS.put("&&", TokenType.AMPAMP);
         OPERATORS.put("||", TokenType.BARBAR);
@@ -56,7 +57,7 @@ public final class Lexer {
 
     public List<Token> tokenize() {
         while (pos < length) {
-            final char current = peek(0);
+            final var current = peek(0);
             if (Character.isDigit(current)) {
                 tokenizeNumber();
             } else if (Character.isLetter(current)) {
@@ -77,8 +78,8 @@ public final class Lexer {
 
     private void tokenizeText() {
         next();
-        final StringBuilder buffer = new StringBuilder();
-        char current = peek(0);
+        final var buffer = new StringBuilder();
+        var current = peek(0);
         while (true) {
             if (current == '\\') {
                 current = next();
@@ -113,27 +114,38 @@ public final class Lexer {
     }
 
     private void tokenizeWord() {
-        final StringBuilder buffer = new StringBuilder();
-        char current = peek(0);
+        final var buffer = new StringBuilder();
+        var current = peek(0);
         while (Character.isLetterOrDigit(current) || (current == '_') || (current == '$')) {
             buffer.append(current);
             current = next();
         }
 
-        final String word = buffer.toString();
+        final var word = buffer.toString();
         switch (word) {
             case "out":
                 addToken(TokenType.PRINT);
                 break;
+
             case "if":
                 addToken(TokenType.IF);
                 break;
+
+            case "match":
+                addToken(TokenType.MATCH);
+                break;
+
+            case "case":
+                addToken(TokenType.CASE);
+                break;
+
             case "else":
                 addToken(TokenType.ELSE);
                 break;
             case "loop":
                 addToken(TokenType.LOOP);
                 break;
+
             case "for":
                 addToken(TokenType.FOR);
                 break;
@@ -161,7 +173,7 @@ public final class Lexer {
     }
 
     private void tokenizeOperator() {
-        char current = peek(0);
+        var current = peek(0);
         if (current == '/') {
             if (peek(1) == '/') {
                 next();
@@ -171,9 +183,9 @@ public final class Lexer {
             }
         }
 
-        final StringBuilder buffer = new StringBuilder();
+        final var buffer = new StringBuilder();
         while (true) {
-            final String text = buffer.toString();
+            final var text = buffer.toString();
             if (!OPERATORS.containsKey(text + current) && !text.isEmpty()) {
                 addToken(OPERATORS.get(text));
                 return;
@@ -185,15 +197,15 @@ public final class Lexer {
     }
 
     private void tokenizeComment() {
-        char current = peek(0);
+        var current = peek(0);
         while ("\r\n\0".indexOf(current) == -1) {
             current = next();
         }
     }
 
     private void tokenizeNumber() {
-        final StringBuilder buffer = new StringBuilder();
-        char current = peek(0);
+        final var buffer = new StringBuilder();
+        var current = peek(0);
         while (true) {
             if (current == '.') {
                 if (buffer.indexOf(".") != -1) {
@@ -216,7 +228,7 @@ public final class Lexer {
     }
 
     private char peek(int relativePosition) {
-        final int position = pos + relativePosition;
+        final var position = pos + relativePosition;
 
         if (position >= length)
             return '\0';

@@ -55,6 +55,10 @@ public final class Parser {
             return ifElse();
         }
 
+        if (match(TokenType.MATCH)) {
+            return matchStatement();
+        }
+
         if (match(TokenType.LOOP)) {
             return loopStatement();
         }
@@ -79,13 +83,17 @@ public final class Parser {
             return functionDeclaration();
         }
 
+        if (match(TokenType.CASE)) {
+            return caseStatement();
+        }
+
         if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.LPAREN) {
             return new FunctionalStatement(function());
         }
 
+
         return assignmentStatement();
     }
-
 
     private Statement assignmentStatement() {
         if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.EQ) {
@@ -100,8 +108,27 @@ public final class Parser {
             return new ArrayAssignmentStatement(array, expression());
         }
 
+        if (get(0).getType() == TokenType.LBRACE) {
+            return statementOrBlock();
+        }
+
         throw new RuntimeException("Unknown statement near!");
     }
+
+    private Statement caseStatement(){
+        final var conditionVariant = expression();
+        consume(TokenType.ARROW);
+        final var body = statementOrBlock();
+        return new CaseStatement(conditionVariant, body);
+    }
+
+    private Statement matchStatement() {
+        final var condition = expression();
+        final var matchBody = statementOrBlock();
+        return new MatchStatement(condition, matchBody);
+    }
+
+
 
     private Statement ifElse() {
         final var condition = expression();
@@ -312,7 +339,7 @@ public final class Parser {
             return result;
         }
 
-        throw new RuntimeException("Unknown expression");
+        throw new RuntimeException(String.format("Unknown expression %s", current));
 
     }
 
