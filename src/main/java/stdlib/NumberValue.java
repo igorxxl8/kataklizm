@@ -24,6 +24,11 @@ public class NumberValue implements Value {
     }
 
     @Override
+    public Object asLink() {
+        return value;
+    }
+
+    @Override
     public String toString() {
         return asString();
     }

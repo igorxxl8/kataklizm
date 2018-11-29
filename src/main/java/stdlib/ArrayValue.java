@@ -39,6 +39,11 @@ public class ArrayValue implements Value {
     }
 
     @Override
+    public Object asLink() {
+        return elements;
+    }
+
+    @Override
     public String toString() {
         return asString();
     }

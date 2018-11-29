@@ -1,0 +1,30 @@
+// create window
+w = window("Painting in Kataklizm", 0,0,1000,1000)
+
+// define colors
+blue = [0, 0, 255]
+green = [0, 255, 0]
+red = [255, 0, 0]
+black = [0, 0, 0]
+// draw line inside window
+paint(w, "Line", 0, 0, 1000, 1000, blue)
+paint(w, "Line", 0, 1000, 1000, 0, red)
+paint(w, "Line", 500, 0, 500, 1000, green)
+paint(w, "Line", 20, 20, 500, 500, black)
+
+// draw rectangle inside window
+paint(w, "Rect", 0, 0, 100, 100, black, "nofill")
+
+// draw fill rectangle inside window
+paint(w, "Rect", 100, 100, 200, 200, black, "fill")
+
+// draw circle inside window
+paint(w, "Circle", 200, 200, 1000, 1000, blue, "nofill")
+
+// draw and fill circle inside window
+paint(w, "Circle", 400, 400, 600, 600, blue, "fill")
+
+// draw polygon inside window
+xpoints = [600, 645, 600, 645, 600]
+ypoints = [600, 600, 845, 845, 600]
+paint(w, "Polygon", xpoints, ypoints, black)

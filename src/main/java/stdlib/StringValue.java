@@ -24,6 +24,11 @@ public class StringValue implements Value {
     }
 
     @Override
+    public Object asLink() {
+        return asString();
+    }
+
+    @Override
     public String toString() {
         return asString();
     }
