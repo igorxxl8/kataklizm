@@ -1,0 +1,5 @@
+i = 0
+loop i < 10 {
+    out ("iteration " + i + "\n")
+    i = i + 1
+}

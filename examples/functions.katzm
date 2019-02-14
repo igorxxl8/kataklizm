@@ -1,0 +1,44 @@
+func menu(){
+    stdout(
+        "Program can: ", "\n",
+        "1. Print sin(pi)", "\n",
+        "2. Print cos(pi)", "\n",
+        "3. Print something", "\n",
+        "0. Exit program",  "\n"
+    )
+    out "Your choice: "
+    in choice
+    ret choice
+}
+
+func print_sin_pi() {
+    out "1.sin(pi)="
+    out sin(PI)
+    out "\n\n"
+}
+
+func print_cos_pi() {
+    out "2.cos(pi)="
+    out cos(PI)
+    out "\n\n"
+}
+
+func print_smth() {
+    out "3.stdout = "
+    stdout(1, 2, 3, "3", sin(0), sin(PI), cos(PI), "\n\n")
+}
+
+func main() {
+    code = 0
+    loop 1 {
+        match menu() {
+            case 1 -> print_sin_pi()
+            case 2 -> print_cos_pi()
+            case 3 -> print_smth()
+            case 0 -> ret code
+        }
+    }
+    ret code
+}
+
+main()

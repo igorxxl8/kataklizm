@@ -1,0 +1,4 @@
+out "Input a: "
+in a
+out "value of a is " + a
+

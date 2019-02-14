@@ -1,0 +1,53 @@
+func menu(){
+    stdout(
+        "Hello, friends. Welcome back to our company. We can: ", "\n",
+        "1. Create window", "\n",
+        "2. Draw line", "\n",
+        "3. Draw rectangle", "\n",
+        "4. Draw circle", "\n",
+        "5. Draw polygon", "\n",
+        "0. Exit program",  "\n"
+    )
+
+    out "Your choice: "
+    in choice
+    ret choice
+}
+
+func createWindow(){
+    stdout("I am create window task", "\n")
+}
+
+func drawLine(){
+    stdout("I am draw line task", "\n")
+}
+
+func drawRectangle(){
+    stdout("I am draw rectangle task", "\n")
+}
+
+func drawCircle(){
+    stdout("I am draw circle task", "\n")
+}
+
+func drawPolygon(){
+    stdout("I am draw polygon task", "\n")
+}
+
+
+func main() {
+    code = 0
+    loop 1 {
+        match menu() {
+            case 1 -> createWindow()
+            case 2 -> drawLine()
+            case 3 -> drawRectangle()
+            case 4 -> drawCircle()
+            case 5 -> drawPolygon()
+            case 0 -> ret code
+        }
+    }
+    ret code
+}
+
+main()

@@ -14,7 +14,7 @@ public class StringValue implements Value {
         try {
             return Double.parseDouble(value);
         }catch (NumberFormatException e){
-            return 0;
+            return Integer.MAX_VALUE;
         }
     }
 

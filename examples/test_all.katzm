@@ -2,7 +2,7 @@ stdout("hello world", "\n")
 a = 100
 b = 20
 if (a > b){
-    out stdout("a", ">", "b\n")
+    stdout("a", ">", "b\n")
 }
 else {
     a = a + b

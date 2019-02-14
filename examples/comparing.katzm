@@ -1,0 +1,10 @@
+a = 10
+b = 20
+c = 30
+d = 10
+out "a = " + a + " b = " + b + " c = " + c + " d = " + d + "\n"
+out "a < b = " + (a < b) + "\n"
+out "b > a = " + (b > a) + "\n"
+out "b <= c = " + (b <= c) + "\n"
+out "c >= d = " + (c >= d) + "\n"
+out "a == d = " + (a == d) + "\n"

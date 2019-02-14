@@ -1,0 +1,12 @@
+out "Input square matrix dimension n: "
+in n
+matrix = init_array(n, n)
+for i = 0; i < n; i = i + 1 {
+     for j = 0; j < n; j = j + 1 {
+	matrix[i][j] = i * 10 + j * 100
+     }	
+}
+out "\n"
+for i = 0; i < n; i = i + 1 {
+     out matrix[i] + "\n"
+}

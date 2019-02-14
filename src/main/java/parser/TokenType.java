@@ -8,6 +8,7 @@ public enum TokenType {
     TEXT,
 
     PRINT,
+    INPUT,
     IF,
     ELSE,
     LOOP,

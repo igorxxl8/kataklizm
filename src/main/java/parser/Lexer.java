@@ -127,6 +127,10 @@ public final class Lexer {
                 addToken(TokenType.PRINT);
                 break;
 
+            case "in":
+                addToken(TokenType.INPUT);
+                break;
+
             case "if":
                 addToken(TokenType.IF);
                 break;
@@ -158,7 +162,7 @@ public final class Lexer {
                 addToken(TokenType.BREAK);
                 break;
 
-            case "function":
+            case "func":
                 addToken(TokenType.FUNCTION);
                 break;
 

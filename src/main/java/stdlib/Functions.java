@@ -63,10 +63,17 @@ public final class Functions {
 
         functions.put("window", args -> {
             var window = new KataklizmWindow(args[0].asString());
-            window.setBounds((int)args[1].asNumber(), (int)args[2].asNumber(), (int)args[3].asNumber(), (int)args[4].asNumber());
+            window.setBounds((int) args[1].asNumber(), (int) args[2].asNumber(), (int) args[3].asNumber(), (int) args[4].asNumber());
             window.setVisible(true);
-            window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            //window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             return new LinkValue(window);
+        });
+
+        functions.put("ClearWindow", args -> {
+            final var window = (KataklizmWindow) args[0].asLink();
+            Integer[] arr = {0, 0, 0};
+            window.drawRect(0, 0, 2000, 2000, (Value[]) new LinkValue(arr).asLink(), "fill");
+            return NumberValue.ZERO;
         });
 
         functions.put("paint", args -> {
@@ -80,7 +87,7 @@ public final class Functions {
                         (int) args[3].asNumber(),
                         (int) args[4].asNumber(),
                         (int) args[5].asNumber(),
-                        (Value[])args[6].asLink()
+                        (Value[]) args[6].asLink()
                 );
                 return NumberValue.ZERO;
             }
@@ -91,7 +98,7 @@ public final class Functions {
                         (int) args[3].asNumber(),
                         (int) args[4].asNumber(),
                         (int) args[5].asNumber(),
-                        (Value[])args[6].asLink(),
+                        (Value[]) args[6].asLink(),
                         args[7].asString()
                 );
                 return NumberValue.ZERO;
@@ -103,7 +110,7 @@ public final class Functions {
                         (int) args[3].asNumber(),
                         (int) args[4].asNumber(),
                         (int) args[5].asNumber(),
-                        (Value[])args[6].asLink(),
+                        (Value[]) args[6].asLink(),
                         args[7].asString()
                 );
                 return NumberValue.ZERO;
@@ -111,9 +118,9 @@ public final class Functions {
 
             if (paintingType.equals("Polygon")) {
                 window.drawPolygon(
-                        (Value[])args[2].asLink(),
-                        (Value[])args[3].asLink(),
-                        (Value[])args[4].asLink()
+                        (Value[]) args[2].asLink(),
+                        (Value[]) args[3].asLink(),
+                        (Value[]) args[4].asLink()
                 );
                 return NumberValue.ZERO;
             }

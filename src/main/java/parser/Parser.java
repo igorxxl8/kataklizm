@@ -51,6 +51,10 @@ public final class Parser {
             return new PrintStatement(expression());
         }
 
+        if (match(TokenType.INPUT)) {
+            return inputStatement();
+        }
+
         if (match(TokenType.IF)) {
             return ifElse();
         }
@@ -93,6 +97,15 @@ public final class Parser {
 
 
         return assignmentStatement();
+    }
+
+    private Statement inputStatement() {
+        if (get(0).getType() == TokenType.WORD) {
+            final var variable = consume(TokenType.WORD).getText();
+            return new InputStatement(variable);
+        }
+
+        throw new RuntimeException("Unknown statement in input statement");
     }
 
     private Statement assignmentStatement() {

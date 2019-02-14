@@ -1,0 +1,28 @@
+a = "14"
+
+match a {
+
+    case "str" -> { stdout ("13", "\n")
+    }
+
+
+    case "1" -> {
+ stdout ("match as 1", "\n")
+    }
+
+
+    case "141" -> { stdout ("match as 141", "\n")
+    }
+
+
+    case "16" -> {
+ stdout ("match as 16", "\n")
+    }
+
+ 
+    case "14" -> {
+ stdout ("match as 14 string", "\n")
+    }
+
+
+}

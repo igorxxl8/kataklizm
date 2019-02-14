@@ -1,0 +1,11 @@
+func Sort(arr, n){
+ 	counter = 0
+	for i=1; i < n; i++{
+ 		for j = i; j > 0 && arr[j-1] > arr[j]; j = j – 1 {
+			counter = counter + 1
+			tmp=arr[j-1]
+			arr[j-1]=arr[j]
+			arr[j]=tmp
+		}
+	}
+}

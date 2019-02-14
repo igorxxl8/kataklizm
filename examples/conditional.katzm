@@ -1,0 +1,12 @@
+condition = 40 < 50 && 50 > 60
+out "res of condition - " + condition
+out "\n"
+
+if (40 < 50 && 50 > 60){
+    out "true\n"
+    out "in body of if condition"
+ }
+else {
+    out "false\n"
+    out "in else body"
+}
