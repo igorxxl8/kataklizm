@@ -1,39 +1,15 @@
 package parser;
 
-public enum TokenType {
+public enum TokenType implements ITokenType {
 
     NUMBER,
 
     WORD,
     TEXT,
-
-    PRINT,
-    INPUT,
-    IF,
-    ELSE,
-    LOOP,
-    FOR,
-    BREAK,
-    CONTINUE,
-    MATCH,
-    CASE,
     ARROW,
 
-    FUNCTION,
-    RETURN,
-
-    PLUS,
-    MINUS,
-    STAR,
-    SLASH,
     EQ,
-    EQEQ,
-    EXCL,
-    EXCLEQ,
-    LT,
-    LTEQ,
-    GT,
-    GTEQ,
+
 
     BAR,
     BARBAR,

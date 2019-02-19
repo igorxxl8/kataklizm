@@ -2,6 +2,7 @@ package parser;
 
 import parser.ast.expressions.*;
 import parser.ast.statements.*;
+import stdlib.Variables;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,47 +48,47 @@ public final class Parser {
     }
 
     private Statement statement() {
-        if (match(TokenType.PRINT)) {
+        if (match(KeywordTokenType.OUT)) {
             return new PrintStatement(expression());
         }
 
-        if (match(TokenType.INPUT)) {
+        if (match(KeywordTokenType.IN)) {
             return inputStatement();
         }
 
-        if (match(TokenType.IF)) {
+        if (match(KeywordTokenType.IF)) {
             return ifElse();
         }
 
-        if (match(TokenType.MATCH)) {
+        if (match(KeywordTokenType.MATCH)) {
             return matchStatement();
         }
 
-        if (match(TokenType.LOOP)) {
+        if (match(KeywordTokenType.LOOP)) {
             return loopStatement();
         }
 
-        if (match(TokenType.BREAK)) {
+        if (match(KeywordTokenType.BREAK)) {
             return new BreakStatement();
         }
 
-        if (match(TokenType.CONTINUE)) {
+        if (match(KeywordTokenType.CONTINUE)) {
             return new ContinueStatement();
         }
 
-        if (match(TokenType.RETURN)) {
+        if (match(KeywordTokenType.RET)) {
             return new ReturnStatement(expression());
         }
 
-        if (match(TokenType.FOR)) {
+        if (match(KeywordTokenType.FOR)) {
             return forStatement();
         }
 
-        if (match(TokenType.FUNCTION)) {
+        if (match(KeywordTokenType.FUNC)) {
             return functionDeclaration();
         }
 
-        if (match(TokenType.CASE)) {
+        if (match(KeywordTokenType.CASE)) {
             return caseStatement();
         }
 
@@ -148,7 +149,7 @@ public final class Parser {
         final var ifStatement = statementOrBlock();
         final Statement elseStatement;
 
-        if (match(TokenType.ELSE)) {
+        if (match(KeywordTokenType.ELSE)) {
             elseStatement = statementOrBlock();
         } else {
             elseStatement = null;
@@ -231,11 +232,11 @@ public final class Parser {
     private Expression equality() {
         var result = conditional();
 
-        if (match(TokenType.EQEQ)) {
+        if (match(ComparisonTokenType.EQEQ)) {
             return new ConditionalExpression(ConditionalExpression.Operator.EQUALS, result, conditional());
         }
 
-        if (match(TokenType.EXCLEQ)) {
+        if (match(ComparisonTokenType.EXCLEQ)) {
             System.out.println("Da");
             return new ConditionalExpression(ConditionalExpression.Operator.NOT_EQUALS, result, conditional());
         }
@@ -246,22 +247,22 @@ public final class Parser {
     private Expression conditional() {
         var result = additive();
         while (true) {
-            if (match(TokenType.LT)) {
+            if (match(ComparisonTokenType.LT)) {
                 result = new ConditionalExpression(ConditionalExpression.Operator.LT, result, additive());
                 continue;
             }
 
-            if (match(TokenType.LTEQ)) {
+            if (match(ComparisonTokenType.LTEQ)) {
                 result = new ConditionalExpression(ConditionalExpression.Operator.LTEQ, result, additive());
                 continue;
             }
 
-            if (match(TokenType.GT)) {
+            if (match(ComparisonTokenType.GT)) {
                 result = new ConditionalExpression(ConditionalExpression.Operator.GT, result, additive());
                 continue;
             }
 
-            if (match(TokenType.GTEQ)) {
+            if (match(ComparisonTokenType.GTEQ)) {
                 result = new ConditionalExpression(ConditionalExpression.Operator.GTEQ, result, additive());
                 continue;
             }
@@ -275,12 +276,12 @@ public final class Parser {
     private Expression additive() {
         var result = multiplicative();
         while (true) {
-            if (match(TokenType.PLUS)) {
+            if (match(ArithmeticTokenType.PLUS)) {
                 result = new BinaryExpression('+', result, multiplicative());
                 continue;
             }
 
-            if (match(TokenType.MINUS)) {
+            if (match(ArithmeticTokenType.MINUS)) {
                 result = new BinaryExpression('-', result, multiplicative());
                 continue;
             }
@@ -293,12 +294,12 @@ public final class Parser {
     private Expression multiplicative() {
         var result = unary();
         while (true) {
-            if (match(TokenType.STAR)) {
+            if (match(ArithmeticTokenType.STAR)) {
                 result = new BinaryExpression('*', result, unary());
                 continue;
             }
 
-            if (match(TokenType.SLASH)) {
+            if (match(ArithmeticTokenType.SLASH)) {
                 result = new BinaryExpression('/', result, unary());
                 continue;
             }
@@ -309,11 +310,11 @@ public final class Parser {
     }
 
     private Expression unary() {
-        if (match(TokenType.MINUS)) {
+        if (match(ArithmeticTokenType.MINUS)) {
             return new UnaryExpression('-', primary());
         }
 
-        if (match(TokenType.PLUS)) {
+        if (match(ArithmeticTokenType.PLUS)) {
             return primary();
         }
 
@@ -387,7 +388,7 @@ public final class Parser {
         return current;
     }
 
-    private boolean match(TokenType type) {
+    private boolean match(ITokenType type) {
         final var current = get(0);
         if (type != current.getType())
             return false;

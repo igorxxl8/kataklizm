@@ -1,9 +1,10 @@
-a = 10
+a = 10.1
 b = 20
 c = 30
 d = 10
+e = "igor"
 out "a = " + a + " b = " + b + " c = " + c + " d = " + d + "\n"
-out "a < b = " + (a < b) + "\n"
+out "a < b = " + (a < 10) + "\n"
 out "b > a = " + (b > a) + "\n"
 out "b <= c = " + (b <= c) + "\n"
 out "c >= d = " + (c >= d) + "\n"

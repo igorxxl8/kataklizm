@@ -22,7 +22,7 @@ func drawLine(){
     stdout("I am draw line task", "\n")
 }
 
-func drawRectangle(){
+func drawRectangle(){;\
     stdout("I am draw rectangle task", "\n")
 }
 
@@ -36,18 +36,23 @@ func drawPolygon(){
 
 
 func main() {
-    code = 0
+    code = 0.5
     loop 1 {
         match menu() {
-            case 1 -> createWindow()
-            case 2 -> drawLine()
-            case 3 -> drawRectangle()
-            case 4 -> drawCircle()
+            case 1 + 1 -> createWindow()
+            case 2 - 2 -> drawLine()
+            case 3 / 3 -> drawRectangle()
+            case 4 * 1 -> drawCircle()
             case 5 -> drawPolygon()
             case 0 -> ret code
         }
     }
     ret code
+
+    a = 7
+    b = 8
+    c = 9
+    out cod
 }
 
 main()

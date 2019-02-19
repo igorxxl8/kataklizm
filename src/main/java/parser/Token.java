@@ -5,12 +5,10 @@ package parser;
  */
 public final class Token {
 
-    private TokenType type;
+    private ITokenType type;
     private String text;
 
-    public Token(){}
-
-    Token(TokenType type, String text) {
+    Token(ITokenType type, String text) {
         this.type = type;
         this.text = text;
     }
@@ -18,26 +16,16 @@ public final class Token {
     @Override
     public String toString() {
         if (!text.isEmpty())
-            return "Token(" + type + ", " + text + ')';
+            return "Token(" + type + ", \"" + text + "\")";
 
         return "Token(" + type + ')';
     }
 
-    TokenType getType() {
+    public ITokenType getType() {
         return type;
     }
 
-    public void setType(TokenType type) {
-        this.type = type;
-    }
-
-    String getText() {
+    public String getText() {
         return text;
     }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-
 }
