@@ -31,11 +31,7 @@ public class Main {
         final var input = new String(Files.readAllBytes(Paths.get(filename)), StandardCharsets.UTF_8);
 
         final var tokens = new Lexer(input).tokenize();
-        final var program = new Parser(tokens).parse();
 
-        var doc = BuildTree(program, filename);
-        doc.normalizeDocument();
-        System.out.println(ConvertXmlDocumentToString(doc));
 
         if (args.length > 1) {
             System.out.println("\nTokens:");
@@ -143,7 +139,14 @@ public class Main {
 
             System.out.println("\nExecution:");
         }
-        program.execute();
+
+        final var parser = new Parser(tokens);
+        final var program = parser.parse();
+        System.err.println(parser.errors);
+
+        var doc = BuildTree(program, filename);
+        System.out.println(ConvertXmlDocumentToString(doc));
+        //program.execute();
     }
 
     private static Document BuildTree(Statement program, String name) throws IOException, ParserConfigurationException, SAXException {

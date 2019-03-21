@@ -7,10 +7,14 @@ public final class Token {
 
     private ITokenType type;
     private String text;
+    int posstr;
+    int posfile;
 
-    Token(ITokenType type, String text) {
+    Token(ITokenType type, String text, int posstr, int posfile) {
         this.type = type;
         this.text = text;
+        this.posstr = posstr;
+        this.posfile = posfile;
     }
 
     @Override

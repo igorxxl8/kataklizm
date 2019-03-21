@@ -133,7 +133,7 @@ public final class Lexer {
         }
 
         final var word = buffer.toString();
-        Token prevToken = new Token(ArithmeticTokenType.MINUS, "-");
+        Token prevToken = new Token(ArithmeticTokenType.MINUS, "-", posinstr, pos);
         if (tokens.size() - 1 >= 0)
             prevToken = tokens.get(tokens.size() - 1);
         switch (word) {
@@ -215,11 +215,9 @@ public final class Lexer {
                 addToken(OPERATORS.get(text));
                 var curToken = tokens.get(tokens.size() - 1);
                 if (prevToken.getType() instanceof IArithmeticTokenType && curToken.getType() instanceof IArithmeticTokenType){
-                    System.out.println(curToken.getType());
                     Errors.add(String.format("%d:%d: error: extra arithmetic expression: \'%s\'", strnum / 2, posinstr, curToken.getType()));
                 }
                 if (prevToken.getType() instanceof IComparisonTokenType && curToken.getType() instanceof IComparisonTokenType){
-                    System.out.println(curToken.getType());
                     Errors.add(String.format("%d:%d: error: extra logical expression: \'%s\'", strnum / 2, posinstr, curToken.getType()));
                 }
                 return;
@@ -281,6 +279,6 @@ public final class Lexer {
     }
 
     private void addToken(ITokenType type, String text) {
-        tokens.add(new Token(type, text));
+        tokens.add(new Token(type, text, posinstr, strnum / 2 + 1));
     }
 }

@@ -3,15 +3,15 @@ package parser;
 import parser.ast.expressions.*;
 import parser.ast.statements.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class Parser {
 
-    private static final Token EOF = new Token(TokenType.EOF, "");
+    private static final Token EOF = new Token(TokenType.EOF, "", 0,0);
     private final List<Token> tokens;
     private int pos;
     private final int size;
+    public List<String> errors = new CustomArrayList<>();
 
     public Parser(List<Token> tokens) {
         this.tokens = tokens;
@@ -30,7 +30,7 @@ public final class Parser {
 
     private Statement block() {
         final var blockStatement = new BlockStatement();
-        consume(TokenType.LBRACE);
+        consume(TokenType.LBRACE, "block");
         while (!match(TokenType.RBRACE)) {
             blockStatement.add(statement());
         }
@@ -101,7 +101,7 @@ public final class Parser {
 
     private Statement inputStatement() {
         if (get(0).getType() == TokenType.WORD) {
-            final var variable = consume(TokenType.WORD).getText();
+            final var variable = consume(TokenType.WORD, "input statement").getText();
             return new InputStatement(variable);
         }
 
@@ -109,16 +109,35 @@ public final class Parser {
     }
 
     private Statement assignmentStatement() {
-        if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.EQ) {
-            final var variable = consume(TokenType.WORD).getText();
-            consume(TokenType.EQ);
+        var tok = get(0);
+
+        if (tok.getType() == TokenType.WORD && get(1).getType() == TokenType.EQ) {
+            final var variable = consume(TokenType.WORD, "assignment statement").getText();
+            consume(TokenType.EQ, "assignment statement");
             return new AssignmentStatement(variable, expression());
         }
 
-        if (get(0).getType() == TokenType.WORD && get(1).getType() == TokenType.LBRACKET) {
+        if (tok.getType() == TokenType.WORD && get(1).getType() == TokenType.LBRACKET) {
             var array = element();
-            consume(TokenType.EQ);
+            consume(TokenType.EQ, "assignment statement");
             return new ArrayAssignmentStatement(array, expression());
+        }
+
+        if (tok.getType() == TokenType.WORD){
+            if (get(1).getType() == TokenType.RPAREN){
+                errors.add(String.format("%d:%d: Function \"%s\" doesn't have open paren\n", tok.posfile, tok.posstr, tok.getText()));
+                match(TokenType.WORD);
+                match(TokenType.RPAREN);
+                return new ErrorStatement();
+            }
+        }
+
+        if (tok.getType() == TokenType.NUMBER && get(1).getType() == TokenType.EQ){
+            errors.add(String.format("%d:%d: Unable to assign value to value\n", tok.posfile, tok.posstr));
+            match(TokenType.NUMBER);
+            match(TokenType.EQ);
+            match(TokenType.NUMBER);
+            return new ErrorStatement();
         }
 
         if (get(0).getType() == TokenType.LBRACE) {
@@ -130,7 +149,7 @@ public final class Parser {
 
     private Statement caseStatement() {
         final var conditionVariant = expression();
-        consume(TokenType.ARROW);
+        consume(TokenType.ARROW, "case statement");
         final var body = statementOrBlock();
         return new CaseStatement(conditionVariant, body);
     }
@@ -164,9 +183,9 @@ public final class Parser {
 
     private Statement forStatement() {
         final var init = assignmentStatement();
-        consume(TokenType.SEMI_COLON);
+        consume(TokenType.SEMI_COLON, "for statement");
         final var term = expression();
-        consume(TokenType.SEMI_COLON);
+        consume(TokenType.SEMI_COLON, "for statement");
         final var inc = assignmentStatement();
         final var stat = statementOrBlock();
         return new ForStatement(init, term, inc, stat);
@@ -174,11 +193,11 @@ public final class Parser {
 
 
     private FunctionDeclarationStatement functionDeclaration() {
-        final var name = consume(TokenType.WORD).getText();
-        consume(TokenType.LPAREN);
+        final var name = consume(TokenType.WORD, "function declaration").getText();
+        consume(TokenType.LPAREN, "function declaration");
         final List<String> argNames = new CustomArrayList<>();
         while (!match(TokenType.RPAREN)) {
-            argNames.add(consume(TokenType.WORD).getText());
+            argNames.add(consume(TokenType.WORD, "function declaration").getText());
             match(TokenType.COMMA);
         }
         final var instructions = statementOrBlock();
@@ -187,10 +206,15 @@ public final class Parser {
 
 
     private FunctionalExpression function() {
-        final var name = consume(TokenType.WORD).getText();
-        consume(TokenType.LPAREN);
+        final var name = consume(TokenType.WORD, "function expression").getText();
+        consume(TokenType.LPAREN, "function expression");
         final var function = new FunctionalExpression(name);
         while (!match(TokenType.RPAREN)) {
+            var tok = get(0);
+            if (tok.getType() instanceof KeywordTokenType){
+                errors.add(String.format("%d:%d: Function \"%s\" doesn't have close paren\n", tok.posfile, tok.posstr, name));
+                break;
+            }
             function.addArgument(expression());
             match(TokenType.COMMA);
         }
@@ -347,16 +371,18 @@ public final class Parser {
 
         if (match(TokenType.LPAREN)) {
             var result = expression();
-            match(TokenType.RPAREN);
-            return result;
+            if (match(TokenType.RPAREN)){
+                return result;
+            }
         }
 
-        throw new RuntimeException(String.format("Unknown expression %s", current));
-
+        errors.add(String.format("%d:%d: Don't assign the value near \"%s\" \n", current.posfile, current.posstr, current.getText()));
+        return new ErrorExpression();
+        //throw new RuntimeException();
     }
 
     private Expression array() {
-        consume(TokenType.LBRACKET);
+        consume(TokenType.LBRACKET, "array expression");
         final List<Expression> elements = new CustomArrayList<>();
         while (!match(TokenType.RBRACKET)) {
             elements.add(expression());
@@ -366,21 +392,22 @@ public final class Parser {
     }
 
     private ArrayAccessExpression element() {
-        final var variable = consume(TokenType.WORD).getText();
+        final var variable = consume(TokenType.WORD, "array access expression").getText();
         List<Expression> indexes = new CustomArrayList<>();
         do {
-            consume(TokenType.LBRACKET);
+            consume(TokenType.LBRACKET, "array access expression");
             indexes.add(expression());
-            consume(TokenType.RBRACKET);
+            consume(TokenType.RBRACKET, "array access expression");
         } while (get(0).getType() == TokenType.LBRACKET);
 
         return new ArrayAccessExpression(variable, indexes);
     }
 
-    private Token consume(TokenType type) {
+    private Token consume(TokenType type, String place) {
         final var current = get(0);
         if (type != current.getType()) {
-            throw new RuntimeException("Token " + current + " doesn't match " + type);
+            errors.add(String.format("%d:%d: %s doesn't match type %s in %s", current.posfile, current.posstr, current, type, place));
+            return null;
         }
         pos++;
         return current;
