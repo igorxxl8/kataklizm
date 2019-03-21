@@ -20,6 +20,6 @@ public class ArrayAssignmentStatement implements Statement {
 
     @Override
     public String toString() {
-        return String.format("ArrayAssignmentStatement(%s = %s)", array.toString(), expression);
+        return String.format("<ArrayAssignmentStatement><Array>%s</Array><Expression>%s</Expression></ArrayAssignmentStatement>", array.toString(), expression);
     }
 }

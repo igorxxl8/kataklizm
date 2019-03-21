@@ -18,8 +18,6 @@ public final class PrintStatement implements Statement {
 
     @Override
     public String toString() {
-        return "PrintStatement{" +
-                "expression=" + expression +
-                '}';
+        return "<PrintStatement>" + expression + "</PrintStatement>";
     }
 }

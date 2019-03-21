@@ -25,6 +25,6 @@ public class FunctionDeclarationStatement implements Statement {
 
     @Override
     public String toString() {
-        return String.format("FunctionDeclarationExpression(%s){%s}", argNames.toString(), instructions.toString());
+        return String.format("<FunctionDeclarationStatement name=\"%s\"><Args>%s</Args><Instructions>%s</Instructions></FunctionDeclarationStatement>", name, argNames.toString(), instructions.toString());
     }
 }

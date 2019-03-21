@@ -25,6 +25,6 @@ public class ArrayExpression implements Expression{
 
     @Override
     public String toString() {
-        return String.format("ArrayExpression(%s)", values.toString());
+        return String.format("<ArrayExpression><Items>%s</Items></ArrayExpression>", values.toString());
     }
 }

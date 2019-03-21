@@ -15,6 +15,11 @@ public class MatchStatement implements Statement {
     }
 
     @Override
+    public String toString() {
+        return "<MatchStatement>" + "<Condition>" + condition + "</Condition><MatchBody>" +  matchBody + "</MatchBody></MatchStatement>";
+    }
+
+    @Override
     public void execute() {
         final var caseStatements = (BlockStatement) matchBody;
         final var conditionResult = condition.eval();
@@ -37,6 +42,7 @@ public class MatchStatement implements Statement {
                 }
             }
         }
+
 
 
     }

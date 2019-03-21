@@ -23,6 +23,6 @@ public class ValueExpression implements Expression {
 
     @Override
     public String toString() {
-        return value.asString();
+        return String.format("<ValueExpression value=\"%s\"/>", value.asString().replace("<", "&lt;").replace(">", "&gt;").replace("&&", "and").replace("&", "log_and"));
     }
 }

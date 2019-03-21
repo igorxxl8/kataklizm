@@ -1,12 +1,12 @@
 func menu(){
     stdout(
-        "Hello, friends. Welcome back to our company. We can: ", "\n",
-        "1. Create window", "\n",
-        "2. Draw line", "\n",
-        "3. Draw rectangle", "\n",
-        "4. Draw circle", "\n",
-        "5. Draw polygon", "\n",
-        "0. Exit program",  "\n"
+        "Hello, friends. Welcome back to our company. We can: ",
+        "1. Create window",
+        "2. Draw line",
+        "3. Draw rectangle",
+        "4. Draw circle",
+        "5. Draw polygon",
+        "0. Exit program"
     )
 
     out "Your choice: "
@@ -15,23 +15,23 @@ func menu(){
 }
 
 func createWindow(){
-    stdout("I am create window task", "\n")
+    stdout("I am create window task")
 }
 
 func drawLine(){
-    stdout("I am draw line task", "\n")
+    stdout("I am draw line task")
 }
 
-func drawRectangle(){;\
-    stdout("I am draw rectangle task", "\n")
+func drawRectangle(){
+    stdout("I am draw rectangle task")
 }
 
 func drawCircle(){
-    stdout("I am draw circle task", "\n")
+    stdout("I am draw circle task")
 }
 
-func drawPolygon(){
-    stdout("I am draw polygon task", "\n")
+func drawPolygon(e){
+    stdout("I am draw polygon task")
 }
 
 

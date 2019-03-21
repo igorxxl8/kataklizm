@@ -5,7 +5,6 @@ import stdlib.UserDeclaratedFunction;
 import stdlib.Value;
 import stdlib.Variables;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionalExpression implements Expression{
@@ -15,7 +14,7 @@ public class FunctionalExpression implements Expression{
 
     public FunctionalExpression(String name) {
         this.name = name;
-        this.args = new ArrayList<>();
+        this.args = new CustomArrayList<>();
     }
 
     public FunctionalExpression(String name, List<Expression> args) {
@@ -54,6 +53,6 @@ public class FunctionalExpression implements Expression{
 
     @Override
     public String toString() {
-        return String.format("FunctionalExpression(%s)",args.toString());
+        return String.format("<FunctionalExpression name=\"%s\"><Args>%s</Args></FunctionalExpression>",name, args.toString());
     }
 }

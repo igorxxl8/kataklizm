@@ -27,10 +27,11 @@ public class IfStatement implements Statement {
     @Override
     public String toString() {
         final var result = new StringBuilder();
-        result.append("if ").append(expression).append(' ').append(ifStatement);
+        result.append("<IfStatement>").append(expression).append(' ').append(ifStatement);
         if (elseStatement != null) {
-            result.append("\nelse ").append(elseStatement);
+            result.append("<ElseStatement>").append(elseStatement).append("</ElseStatement>");
         }
+        result.append("</IfStatement>");
 
         return result.toString();
     }

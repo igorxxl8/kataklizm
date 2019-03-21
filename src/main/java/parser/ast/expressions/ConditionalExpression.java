@@ -31,7 +31,27 @@ public final class ConditionalExpression implements Expression {
         }
 
         public String getName() {
+            if (name.equals("<")){
+                return "&lt;";
+            }
+            if (name.equals(">")){
+                return "&gt;";
+            }
+            if (name.equals("<=")){
+                return "&lt;=";
+            }
+            if (name.equals(">=")){
+                return "&gt;=";
+            }
+            if (name.equals("&&")){
+                return "and";
+            }
             return name;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("<Operator operator=\"%s\"/>", getName());
         }
     }
 
@@ -77,7 +97,7 @@ public final class ConditionalExpression implements Expression {
 
     @Override
     public String toString() {
-        return String.format("BinaryExpression(%s %s %s)", expr1, operation.getName(), expr2);
+        return String.format("<ConditionalExpression>%s%s%s</ConditionalExpression>", expr1, operation.toString(), expr2);
 
     }
 }

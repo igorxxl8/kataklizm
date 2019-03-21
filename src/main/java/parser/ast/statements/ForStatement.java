@@ -32,6 +32,6 @@ public class ForStatement implements Statement {
 
     @Override
     public String toString() {
-        return String.format("ForStatement(%s;%s;%s) {%s}", init, term, inc, stat);
+        return String.format("<ForStatement><Init>%s</Init><Condition>%s</Condition><Increment>%s</Increment>%s</ForStatement>", init, term, inc, stat);
     }
 }

@@ -49,6 +49,7 @@ public class ArrayAccessExpression implements Expression {
 
     @Override
     public String toString() {
-        return variable + indexes;
+
+        return String.format("<ArrayAccessExpression name=\"%s\"><Indexes>%s</Indexes></ArrayAccessExpression>", variable, indexes);
     }
 }

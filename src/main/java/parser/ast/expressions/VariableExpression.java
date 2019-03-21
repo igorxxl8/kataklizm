@@ -22,6 +22,6 @@ public final class VariableExpression implements Expression {
 
     @Override
     public String toString() {
-        return String.format("VariableExpression(%s)", name);
+        return String.format("<VariableExpression name=\"%s\"/>", name);
     }
 }

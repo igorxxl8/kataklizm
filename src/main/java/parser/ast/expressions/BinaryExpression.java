@@ -50,7 +50,7 @@ public final class BinaryExpression implements Expression {
 
     @Override
     public String toString() {
-        return String.format("BinaryExpression(%s %c %s)", expr1, operation, expr2);
+        return String.format("<BinaryExpression>%s<OperationExpression operation=\"%c\"/>%s</BinaryExpression>", expr1, operation, expr2);
 
     }
 }

@@ -8,6 +8,6 @@ public class ContinueStatement extends RuntimeException implements Statement {
 
     @Override
     public String toString() {
-        return "ContinueStatement()";
+        return "<ContinueStatement/>";
     }
 }

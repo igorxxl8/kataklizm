@@ -8,6 +8,6 @@ public class BreakStatement extends RuntimeException implements Statement {
 
     @Override
     public String toString() {
-        return "BreakStatement()";
+        return "<BreakStatement/>";
     }
 }

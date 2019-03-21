@@ -20,6 +20,6 @@ public class InputStatement implements Statement {
 
     @Override
     public String toString() {
-        return String.format("InputStatement(%s)", variable);
+        return String.format("<InputStatement var=\"%s\"/>", variable);
     }
 }

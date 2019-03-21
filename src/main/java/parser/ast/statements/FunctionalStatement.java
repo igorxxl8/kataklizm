@@ -18,6 +18,6 @@ public class FunctionalStatement implements Statement {
 
     @Override
     public String toString() {
-        return function.toString();
+        return String.format("<FunctionalStatement>%s</FunctionalStatement>", function.toString());
     }
 }

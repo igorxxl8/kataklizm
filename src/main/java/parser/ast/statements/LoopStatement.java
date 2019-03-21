@@ -27,6 +27,6 @@ public class LoopStatement implements Statement {
 
     @Override
     public String toString() {
-        return String.format("LoopStatement(%s) {%s}", condition, statement);
+        return String.format("<LoopStatement><Condition>%s</Condition>%s</LoopStatement>", condition, statement);
     }
 }

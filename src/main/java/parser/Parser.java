@@ -2,7 +2,6 @@ package parser;
 
 import parser.ast.expressions.*;
 import parser.ast.statements.*;
-import stdlib.Variables;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,7 +128,7 @@ public final class Parser {
         throw new RuntimeException("Unknown statement near!");
     }
 
-    private Statement caseStatement(){
+    private Statement caseStatement() {
         final var conditionVariant = expression();
         consume(TokenType.ARROW);
         final var body = statementOrBlock();
@@ -141,7 +140,6 @@ public final class Parser {
         final var matchBody = statementOrBlock();
         return new MatchStatement(condition, matchBody);
     }
-
 
 
     private Statement ifElse() {
@@ -178,7 +176,7 @@ public final class Parser {
     private FunctionDeclarationStatement functionDeclaration() {
         final var name = consume(TokenType.WORD).getText();
         consume(TokenType.LPAREN);
-        final List<String> argNames = new ArrayList<>();
+        final List<String> argNames = new CustomArrayList<>();
         while (!match(TokenType.RPAREN)) {
             argNames.add(consume(TokenType.WORD).getText());
             match(TokenType.COMMA);
@@ -359,7 +357,7 @@ public final class Parser {
 
     private Expression array() {
         consume(TokenType.LBRACKET);
-        final List<Expression> elements = new ArrayList<>();
+        final List<Expression> elements = new CustomArrayList<>();
         while (!match(TokenType.RBRACKET)) {
             elements.add(expression());
             match(TokenType.COMMA);
@@ -369,7 +367,7 @@ public final class Parser {
 
     private ArrayAccessExpression element() {
         final var variable = consume(TokenType.WORD).getText();
-        List<Expression> indexes = new ArrayList<>();
+        List<Expression> indexes = new CustomArrayList<>();
         do {
             consume(TokenType.LBRACKET);
             indexes.add(expression());

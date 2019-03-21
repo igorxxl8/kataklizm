@@ -18,10 +18,7 @@ public class CaseStatement implements Statement {
 
     @Override
     public String toString() {
-        return "CaseStatement{" +
-                  caseExpression +
-                " -> " + body +
-                '}';
+        return "<CaseStatement>" + caseExpression  + body + "</CaseStatement>";
     }
 
     @Override
