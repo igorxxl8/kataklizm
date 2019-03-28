@@ -6,11 +6,7 @@ import stdlib.Value;
 
 public final class ConditionalExpression implements Expression {
 
-    public static enum Operator {
-        PLUS("+"),
-        MINUS("-"),
-        MULTIPLY("*"),
-        DIVIDE("/"),
+    public enum Operator {
 
         EQUALS("=="),
         NOT_EQUALS("!="),

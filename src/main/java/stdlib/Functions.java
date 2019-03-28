@@ -1,9 +1,6 @@
 package stdlib;
 
-import parser.ast.expressions.ArrayAccessExpression;
-
-import javax.swing.*;
-import java.awt.*;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,6 +29,30 @@ public final class Functions {
         functions.put("stdout", args -> {
             for (var arg : args) {
                 System.out.print(arg.asString());
+            }
+            return NumberValue.ZERO;
+        });
+
+        functions.put("sleep", args -> {
+            if (args.length != 1) {
+                throw new RuntimeException("One arg expected!");
+            }
+            try {
+                Thread.sleep((long)args[0].asNumber());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return NumberValue.ZERO;
+        });
+
+        functions.put("clear_console", args -> {
+            for (var arg : args) {
+                System.out.print(arg.asString());
+            }
+            try {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } catch (InterruptedException | IOException e) {
+                e.printStackTrace();
             }
             return NumberValue.ZERO;
         });

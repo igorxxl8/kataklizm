@@ -16,10 +16,6 @@ public class ArrayValue implements Value {
         System.arraycopy(elements, 0, this.elements, 0, size);
     }
 
-    public ArrayValue(ArrayValue array) {
-        this(array.elements);
-    }
-
     public Value get(int index) {
         return elements[index];
     }

@@ -1,6 +1,5 @@
 package parser.ast.statements;
 
-import parser.ast.expressions.Expression;
 import parser.ast.expressions.FunctionalExpression;
 
 public class FunctionalStatement implements Statement {

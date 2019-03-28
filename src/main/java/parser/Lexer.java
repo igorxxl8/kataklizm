@@ -1,6 +1,6 @@
 package parser;
 
-import org.parboiled.common.Tuple2;
+import parser.ast.expressions.CustomArrayList;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,15 +13,14 @@ import java.util.Map;
  */
 public final class Lexer {
 
-    public static List<String> Errors;
-    public static HashMap<String, Tuple2<Integer, Integer>> WordPosition = new HashMap<>();
+    static List<String> Errors;
 
     private static final String OPERATORS_CHARS = "+-*/(){}[]=<>&!|;,";
 
     private static final Map<String, ITokenType> OPERATORS;
 
     static {
-        Errors = new ArrayList<>();
+        Errors = new CustomArrayList<>();
         OPERATORS = new HashMap<>();
         OPERATORS.put("+", ArithmeticTokenType.PLUS);
         OPERATORS.put("-", ArithmeticTokenType.MINUS);
@@ -185,7 +184,6 @@ public final class Lexer {
                 break;
 
             default:
-                WordPosition.put(word, new Tuple2<>(strnum / 2, posinstr));
                 addToken(TokenType.WORD, word);
                 break;
         }

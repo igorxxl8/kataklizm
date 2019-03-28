@@ -8,7 +8,7 @@ red = [255, 0, 0]
 black = [0, 0, 0]
 // draw line inside window
 paint(w, "Line", 0, 0, 1000, 1000, blue)
-paint(w, "Line", 0, 1000, 1000, 0, red)
+paint(w, "Line", 0, 100, 1000, 0, red)
 paint(w, "Line", 500, 0, 500, 1000, green)
 paint(w, "Line", 20, 20, 500, 500, black)
 

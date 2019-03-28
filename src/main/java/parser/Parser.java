@@ -298,13 +298,14 @@ public final class Parser {
     private Expression additive() {
         var result = multiplicative();
         while (true) {
+            final var token = get(0);
             if (match(ArithmeticTokenType.PLUS)) {
-                result = new BinaryExpression('+', result, multiplicative());
+                result = new BinaryExpression('+', result, multiplicative(), token.posstr, token.posfile);
                 continue;
             }
 
             if (match(ArithmeticTokenType.MINUS)) {
-                result = new BinaryExpression('-', result, multiplicative());
+                result = new BinaryExpression('-', result, multiplicative(), token.posstr, token.posfile);
                 continue;
             }
             break;
@@ -316,13 +317,14 @@ public final class Parser {
     private Expression multiplicative() {
         var result = unary();
         while (true) {
+            final var token = get(0);
             if (match(ArithmeticTokenType.STAR)) {
-                result = new BinaryExpression('*', result, unary());
+                result = new BinaryExpression('*', result, unary(), token.posstr, token.posfile);
                 continue;
             }
 
             if (match(ArithmeticTokenType.SLASH)) {
-                result = new BinaryExpression('/', result, unary());
+                result = new BinaryExpression('/', result, unary(), token.posstr, token.posfile);
                 continue;
             }
             break;
@@ -400,7 +402,8 @@ public final class Parser {
             consume(TokenType.RBRACKET, "array access expression");
         } while (get(0).getType() == TokenType.LBRACKET);
 
-        return new ArrayAccessExpression(variable, indexes);
+        final var prevToken = get(-2);
+        return new ArrayAccessExpression(variable, indexes, prevToken.posstr, prevToken.posfile);
     }
 
     private Token consume(TokenType type, String place) {

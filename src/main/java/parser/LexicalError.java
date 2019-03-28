@@ -43,8 +43,8 @@ public class LexicalError {
                         var prevText = previousToken.getText();
                         var kwtext = a.getName();
                         if (kwtext.contains(prevText) || prevText.contains(kwtext)) {
-                            var b = Lexer.WordPosition.get(prevText);
-                            Lexer.Errors.add(String.format("%d:%d: error: implicit declaration of function: \'%s\'", b.a, b.b, prevText));
+                            //var b = Lexer.WordPosition.get(prevText);
+                            //Lexer.Errors.add(String.format("%d:%d: error: implicit declaration of function: \'%s\'", b.a, b.b, prevText));
                         }
                     }
                 }
@@ -111,14 +111,9 @@ public class LexicalError {
             System.out.println(cl + " | " + constantsValueList.get(cl));
         }
 
-        if (!Lexer.Errors.isEmpty()) {
-            System.out.println("\nErrors:");
-        }
         for (var error :
                 Lexer.Errors) {
-            System.out.println(String.format("%s:%s", filename, error));
+            System.err.println(String.format("%s:%s", filename, error));
         }
-
-        System.out.println("\nExecution:");
     }
 }

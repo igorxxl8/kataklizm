@@ -1,7 +1,10 @@
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import parser.*;
+import parser.Lexer;
+import parser.LexicalError;
+import parser.Parser;
+import parser.SemanticError;
 import parser.ast.statements.Statement;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,9 +20,6 @@ import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 
 
 public class Main {
@@ -36,21 +36,25 @@ public class Main {
 
         // lR2
         final var lexical = new LexicalError(tokens, filename);
-        if (args.length > 1) {
-            lexical.Analyze();
-        }
 
         // LR3
         final var parser = new Parser(tokens);
         final var program = parser.parse();
-        System.err.println(parser.errors);
-        var doc = BuildTree(program, filename);
-        System.out.println(ConvertXmlDocumentToString(doc));
+        final var tree = BuildTree(program, filename);
 
         // LR4
+        final var semantic = new SemanticError(tree);
+
+        if (args.length > 1) {
+            lexical.Analyze();
+            System.err.println(parser.errors);
+            System.out.println(ConvertXmlDocumentToString(tree));
+            semantic.Analyze();
+            System.err.println(semantic.getErrors());
+        }
 
         // LR5
-        //program.execute();
+        program.execute();
     }
 
     private static Document BuildTree(Statement program, String name) throws IOException, ParserConfigurationException, SAXException {

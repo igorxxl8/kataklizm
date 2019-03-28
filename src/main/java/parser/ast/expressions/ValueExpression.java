@@ -1,5 +1,6 @@
 package parser.ast.expressions;
 
+import stdlib.LinkValue;
 import stdlib.NumberValue;
 import stdlib.StringValue;
 import stdlib.Value;
@@ -23,6 +24,16 @@ public class ValueExpression implements Expression {
 
     @Override
     public String toString() {
-        return String.format("<ValueExpression value=\"%s\"/>", value.asString().replace("<", "&lt;").replace(">", "&gt;").replace("&&", "and").replace("&", "log_and"));
+        String type = null;
+        if (value instanceof StringValue){
+            type = "String";
+        }
+        else if (value instanceof NumberValue){
+            type = "Number";
+        }
+        else if (value instanceof LinkValue){
+            type = "Link";
+        }
+        return String.format("<ValueExpression type=\"%s\" value=\"%s\"/>", type, value.asString().replace("<", "&lt;").replace(">", "&gt;").replace("&&", "and").replace("&", "log_and"));
     }
 }

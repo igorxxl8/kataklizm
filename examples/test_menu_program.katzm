@@ -1,12 +1,11 @@
 func menu(){
     stdout(
-        "Hello, friends. Welcome back to our company. We can: ",
-        "1. Create window",
-        "2. Draw line",
-        "3. Draw rectangle",
-        "4. Draw circle",
-        "5. Draw polygon",
-        "0. Exit program"
+        "Hello, friends. Welcome back to our company. We can: ", "\n",
+        "1. Print what you input", "\n",
+        "2. Test loop", "\n",
+        "3. Draw run string", "\n",
+        "4. Sort array", "\n",
+        "0. Exit program" "\n"
     )
 
     out "Your choice: "
@@ -14,45 +13,68 @@ func menu(){
     ret choice
 }
 
-func createWindow(){
-    stdout("I am create window task")
+func print_input(){
+    stdout("Input string: ")
+    in inp
+    stdout("Your string: ", inp, "\n")
 }
 
-func drawLine(){
-    stdout("I am draw line task")
+func test_loop(){
+    for i = 0; i < 10; i = i + 1{
+        stdout(i, "\n")
+    }
 }
 
-func drawRectangle(){
-    stdout("I am draw rectangle task")
+func draw_run_string(){
+    clear_console()
+    run_string = "I AM RUN STRING"
+    space_string = " "
+    for i = 0; i < 100; i = i + 1{
+        sam = space_string + run_string
+        space_string = space_string + " "
+        stdout(sam, "\n")
+        sleep(10)
+        clear_console()
+    }
 }
 
-func drawCircle(){
-    stdout("I am draw circle task")
+func sort(arr, n){
+ 	counter = 0
+	for i = 1; i < n; i = i + 1 {
+ 		for j = i; j > 0; j = j - 1 {
+ 		    if arr[j-1] > arr[j]{
+                counter = counter + 1
+                tmp = arr[j-1]
+                arr[j-1] = arr[j]
+                arr[j] = tmp
+			}
+			stdout ("Step[", i, " ",  j, "]: ",  arr, "\n")
+		}
+	}
 }
 
-func drawPolygon(e){
-    stdout("I am draw polygon task")
+func sort_array(){
+    array = [8, 5, 2, 6, 9, 3, 1, 4, 0, 7]
+    stdout("Start: ", array, "\n")
+    sort(array, 10)
+    stdout ("Result: ", array, "\n")
 }
+
+
 
 
 func main() {
     code = 0.5
     loop 1 {
         match menu() {
-            case 1 + 1 -> createWindow()
-            case 2 - 2 -> drawLine()
-            case 3 / 3 -> drawRectangle()
-            case 4 * 1 -> drawCircle()
-            case 5 -> drawPolygon()
+            case 1 -> print_input()
+            case 2 -> test_loop()
+            case 3 -> draw_run_string()
+            case 4 -> sort_array()
             case 0 -> ret code
         }
     }
     ret code
-
-    a = 7
-    b = 8
-    c = 9
-    out cod
 }
 
 main()

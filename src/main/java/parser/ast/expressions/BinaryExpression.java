@@ -9,11 +9,16 @@ public final class BinaryExpression implements Expression {
 
     private Expression expr1, expr2;
     private char operation;
+    private int _opPosStr;
+    private int _opPosLine;
 
-    public BinaryExpression(char operation, Expression expr1, Expression expr2) {
-        this.operation = operation;
+
+    public BinaryExpression(char operation, Expression expr1, Expression expr2,  int opPosStr, int opPosLine) {
         this.expr1 = expr1;
         this.expr2 = expr2;
+        this.operation = operation;
+        _opPosStr = opPosStr;
+        _opPosLine = opPosLine;
     }
 
     @Override
@@ -50,7 +55,7 @@ public final class BinaryExpression implements Expression {
 
     @Override
     public String toString() {
-        return String.format("<BinaryExpression>%s<OperationExpression operation=\"%c\"/>%s</BinaryExpression>", expr1, operation, expr2);
+        return String.format("<BinaryExpression>%s<OperationExpression operation=\"%c\" str=\"%d\" line=\"%d\"/>%s</BinaryExpression>", expr1, operation, _opPosStr, _opPosLine, expr2);
 
     }
 }

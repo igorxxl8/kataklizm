@@ -7,6 +7,15 @@ public final class Token {
 
     private ITokenType type;
     private String text;
+
+    public int getPosstr() {
+        return posstr;
+    }
+
+    public int getPosfile() {
+        return posfile;
+    }
+
     int posstr;
     int posfile;
 

@@ -1,17 +1,18 @@
 a = 10
 b = 20
 c = a == 10
-d = a == 10 || b ==
+d = a == 10 || b
 if(c == 10){
 
 }
 
-5 = 5
-lolcheg)
-llll(
+array = ["5", 5, 5]
 
-for e = 0; e < 10 e = e + 4 {
+array["Ssdfa"] = 7
 
-}
+variable = 5 + "TUS"
+
+super =  7 / 0
+
 out(a)
 

@@ -1,7 +1,6 @@
 package parser.ast.statements;
 
 import parser.ast.expressions.Expression;
-import stdlib.Value;
 import stdlib.Variables;
 
 public final class AssignmentStatement implements Statement{

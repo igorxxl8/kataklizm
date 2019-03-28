@@ -10,10 +10,14 @@ public class ArrayAccessExpression implements Expression {
 
     private final String variable;
     private final List<Expression> indexes;
+    private int _posStr;
+    private int _posLine;
 
-    public ArrayAccessExpression(String var, List<Expression> indexes) {
+    public ArrayAccessExpression(String var, List<Expression> indexes, int posStr, int posLine) {
         this.variable = var;
         this.indexes = indexes;
+        _posStr = posStr;
+        _posLine = posLine;
     }
 
 
@@ -50,6 +54,6 @@ public class ArrayAccessExpression implements Expression {
     @Override
     public String toString() {
 
-        return String.format("<ArrayAccessExpression name=\"%s\"><Indexes>%s</Indexes></ArrayAccessExpression>", variable, indexes);
+        return String.format("<ArrayAccessExpression name=\"%s\" line=\"%d\" str=\"%d\"><Indexes>%s</Indexes></ArrayAccessExpression>", variable, _posLine, _posStr, indexes);
     }
 }
