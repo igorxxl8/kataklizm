@@ -1,5 +1,7 @@
 package stdlib;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 
 public class ArrayValue implements Value {
@@ -29,11 +31,13 @@ public class ArrayValue implements Value {
         throw new RuntimeException("Cannot not cast array to number");
     }
 
+    @NotNull
     @Override
     public String asString() {
         return Arrays.toString(elements);
     }
 
+    @NotNull
     @Override
     public Object asLink() {
         return elements;

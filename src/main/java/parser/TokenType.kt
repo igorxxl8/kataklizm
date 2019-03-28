@@ -1,8 +1,6 @@
-package parser.TokenTypes;
+package parser
 
-import parser.interfaces.ITokenType;
-
-public enum TokenType implements ITokenType {
+enum class TokenType : ITokenType {
 
     NUMBER,
 

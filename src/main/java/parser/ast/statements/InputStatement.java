@@ -15,7 +15,7 @@ public class InputStatement implements Statement {
     @Override
     public void execute() {
         final var input = new Scanner(System.in).nextLine();
-        Variables.set(variable, new StringValue(input));
+        Variables.INSTANCE.set(variable, new StringValue(input));
     }
 
     @Override

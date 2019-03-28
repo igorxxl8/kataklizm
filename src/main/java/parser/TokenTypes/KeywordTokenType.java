@@ -1,6 +1,6 @@
 package parser.TokenTypes;
 
-import parser.Interfaces.IKeywordTokenType;
+import parser.interfaces.IKeywordTokenType;
 
 public enum KeywordTokenType implements IKeywordTokenType {
     OUT,

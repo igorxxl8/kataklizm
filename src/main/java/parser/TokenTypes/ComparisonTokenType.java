@@ -1,6 +1,6 @@
 package parser.TokenTypes;
 
-import parser.Interfaces.IComparisonTokenType;
+import parser.interfaces.IComparisonTokenType;
 
 public enum ComparisonTokenType implements IComparisonTokenType {
     EQEQ,

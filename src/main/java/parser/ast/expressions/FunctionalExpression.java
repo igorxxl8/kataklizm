@@ -17,11 +17,6 @@ public class FunctionalExpression implements Expression{
         this.args = new CustomArrayList<>();
     }
 
-    public FunctionalExpression(String name, List<Expression> args) {
-        this.name = name;
-        this.args = args;
-    }
-
     public void addArgument(Expression arg) {
         args.add(arg);
     }
@@ -40,12 +35,12 @@ public class FunctionalExpression implements Expression{
                 throw new RuntimeException("Args count mismatch!");
             }
 
-            Variables.push();
+            Variables.INSTANCE.push();
             for (var i = 0; i < size; i++) {
-                Variables.set(userFunction.getArgsName(i), values[i]);
+                Variables.INSTANCE.set(userFunction.getArgsName(i), values[i]);
             }
             final var result = userFunction.execute(values);
-            Variables.pop();
+            Variables.INSTANCE.pop();
             return result;
         }
         return function.execute(values);

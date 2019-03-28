@@ -1,6 +1,6 @@
 package parser.TokenTypes;
 
-import parser.Interfaces.IArithmeticTokenType;
+import parser.interfaces.IArithmeticTokenType;
 
 public enum ArithmeticTokenType implements IArithmeticTokenType {
     PLUS,

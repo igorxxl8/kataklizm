@@ -16,7 +16,7 @@ public final class AssignmentStatement implements Statement{
     @Override
     public void execute() {
         final var result = expression.eval();
-        Variables.set(variable, result);
+        Variables.INSTANCE.set(variable, result);
     }
 
     @Override

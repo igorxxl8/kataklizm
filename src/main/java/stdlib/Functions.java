@@ -30,7 +30,7 @@ public final class Functions {
             for (var arg : args) {
                 System.out.print(arg.asString());
             }
-            return NumberValue.ZERO;
+            return NumberValue.Companion.getNULL$KATAKLIZM();
         });
 
         functions.put("sleep", args -> {
@@ -42,7 +42,7 @@ public final class Functions {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            return NumberValue.ZERO;
+            return NumberValue.Companion.getNULL$KATAKLIZM();
         });
 
         functions.put("clear_console", args -> {
@@ -54,7 +54,7 @@ public final class Functions {
             } catch (InterruptedException | IOException e) {
                 e.printStackTrace();
             }
-            return NumberValue.ZERO;
+            return NumberValue.Companion.getNULL$KATAKLIZM();
         });
 
         functions.put("array", ArrayValue::new);
@@ -71,7 +71,7 @@ public final class Functions {
                 var array = new ArrayValue(size);
                 if (index == last) {
                     for (var i = 0; i < size; i++) {
-                        array.set(i, NumberValue.ZERO);
+                        array.set(i, NumberValue.Companion.getNULL$KATAKLIZM());
                     }
                 } else if (index < last) {
                     for (var i = 0; i < size; i++) {
@@ -94,7 +94,7 @@ public final class Functions {
             final var window = (KataklizmWindow) args[0].asLink();
             Integer[] arr = {0, 0, 0};
             window.drawRect(0, 0, 2000, 2000, (Value[]) new LinkValue(arr).asLink(), "fill");
-            return NumberValue.ZERO;
+            return NumberValue.Companion.getNULL$KATAKLIZM();
         });
 
         functions.put("paint", args -> {
@@ -110,7 +110,7 @@ public final class Functions {
                         (int) args[5].asNumber(),
                         (Value[]) args[6].asLink()
                 );
-                return NumberValue.ZERO;
+                return NumberValue.Companion.getNULL$KATAKLIZM();
             }
 
             if (paintingType.equals("Rect")) {
@@ -122,7 +122,7 @@ public final class Functions {
                         (Value[]) args[6].asLink(),
                         args[7].asString()
                 );
-                return NumberValue.ZERO;
+                return NumberValue.Companion.getNULL$KATAKLIZM();
             }
 
             if (paintingType.equals("Circle")) {
@@ -134,7 +134,7 @@ public final class Functions {
                         (Value[]) args[6].asLink(),
                         args[7].asString()
                 );
-                return NumberValue.ZERO;
+                return NumberValue.Companion.getNULL$KATAKLIZM();
             }
 
             if (paintingType.equals("Polygon")) {
@@ -143,7 +143,7 @@ public final class Functions {
                         (Value[]) args[3].asLink(),
                         (Value[]) args[4].asLink()
                 );
-                return NumberValue.ZERO;
+                return NumberValue.Companion.getNULL$KATAKLIZM();
             }
 
             throw new RuntimeException(String.format("Unknown painting type - %s", paintingType));

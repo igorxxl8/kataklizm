@@ -1,6 +1,6 @@
 package parser.TokenTypes;
 
-import parser.Interfaces.ITokenType;
+import parser.interfaces.ITokenType;
 
 /**
  * @author Igor Turcevich
