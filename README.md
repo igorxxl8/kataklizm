@@ -12,9 +12,6 @@ xmlns="http://www.w3.org/TR/REC-html40">
 <meta name=Generator content="Microsoft Word 15">
 <meta name=Originator content="Microsoft Word 15">
 <link rel=File-List href="&#1058;&#1056;&#1055;&#1054;_&#1058;&#1047;_&#1050;&#1088;&#1080;&#1087;&#1090;&#1086;&#1073;&#1080;&#1088;&#1078;&#1072;.files/filelist.xml">
-<title>&#1060;&#1091;&#1085;&#1082;&#1094;&#1080;&#1086;&#1085;&#1072;&#1083;&#1100;&#1085;&#1099;&#1077;
-&#1090;&#1088;&#1077;&#1073;&#1086;&#1074;&#1072;&#1085;&#1080;&#1103; &#1082;
-&#1087;&#1088;&#1086;&#1076;&#1091;&#1082;&#1090;&#1091;</title>
 <!--[if gte mso 9]><xml>
  <o:DocumentProperties>
   <o:Author>Klyopa</o:Author>
